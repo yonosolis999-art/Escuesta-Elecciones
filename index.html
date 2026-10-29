@@ -29,7 +29,6 @@
             </div>
             <nav class="hidden md:flex items-center space-x-8 text-sm font-medium text-slate-300">
                 <a href="#metodologia" class="hover:text-indigo-400 transition-colors">Metodología</a>
-                <a href="#partidos" class="hover:text-indigo-400 transition-colors">Partidos Analizados</a>
                 <a href="#faq" class="hover:text-indigo-400 transition-colors">Preguntas Frecuentes</a>
             </nav>
             <div>
@@ -116,7 +115,7 @@
                 <p class="text-slate-300 mb-8 text-base leading-relaxed">
                     El cuestionario consta de <strong class="text-indigo-400">24 preguntas sencillas</strong> divididas en 4 bloques temáticos clave para España. Te tomará menos de 4 minutos completarlo.
                 </p>
-                <button onclick="startSurvey()" class="w-full sm:w-auto px-10 py-4 rounded-xl bg-gradient-to-r from-indigo-600 to-purple-600 text-white font-bold text-lg shadow-xl shadow-indigo-600/30 hover:scale-105 transition-all cursor-pointer">
+                <button onclick="startTest()" class="w-full sm:w-auto px-10 py-4 rounded-xl bg-gradient-to-r from-indigo-600 to-purple-600 text-white font-bold text-lg shadow-xl shadow-indigo-600/30 hover:scale-105 transition-all cursor-pointer">
                     Comenzar Test Ahora
                 </button>
             </div>
@@ -367,7 +366,7 @@
                 id: 1,
                 block: "Economía y Fiscalidad",
                 text: "¿Consideras que se deben bajar los impuestos a las rentas más altas y a las grandes empresas para estimular la inversión y el crecimiento económico?",
-                econWeight: 1.0, // Right / Free Market
+                econWeight: 1.0, 
                 socialWeight: 0.0,
                 partyStances: {
                     "Podemos": "Total oposición. Defienden alzas fiscales drásticas a grandes fortunas y beneficios empresariales (Programa 2023).",
@@ -382,7 +381,7 @@
                 id: 2,
                 block: "Economía y Fiscalidad",
                 text: "¿Estás a favor de endurecer la regulación pública del mercado del alquiler y fijar topes máximos a los precios de la vivienda?",
-                econWeight: -1.0, // State Intervention
+                econWeight: -1.0, 
                 socialWeight: 0.0,
                 partyStances: {
                     "Podemos": "Totalmente a favor. Impulsan expropiaciones temporales y control estricto de precios.",
@@ -552,7 +551,7 @@
                 block: "Derechos Sociales y Libertades",
                 text: "¿Estás a favor de mantener y ampliar las leyes de protección integral contra la violencia de género y los delitos de odio por LGTBIQfobia?",
                 econWeight: 0.0,
-                socialWeight: 1.0, // Libertarian / Individual Liberty
+                socialWeight: 1.0, 
                 partyStances: {
                     "Podemos": "Totalmente a favor. Impulsoras de leyes de igualdad estricta.",
                     "Sumar / F. Amplio": "Totalmente a favor. Defensa activa de los derechos LGTBIQ+ y feministas.",
@@ -582,7 +581,7 @@
                 block: "Derechos Sociales y Libertades",
                 text: "¿Se debería endurecer la política de seguridad ciudadana (Ley Mordaza) otorgando mayor respaldo legal y autoridad a las fuerzas policiales?",
                 econWeight: 0.0,
-                socialWeight: -1.0, // Authoritarian / State Control
+                socialWeight: -1.0, 
                 partyStances: {
                     "Podemos": "Total oposición. Exigen derogación íntegra de la Ley Orgánica de Protección de la Seguridad Ciudadana.",
                     "Sumar / F. Amplio": "En desacuerdo. Promueven relajar sanciones y proteger derecho a manifestación.",
@@ -659,7 +658,7 @@
                 block: "Modelo de Estado y Política Territorial",
                 text: "¿Se debería recentralizar en el Estado competencias clave como Sanidad, Educación y Justicia para garantizar la igualdad entre españoles?",
                 econWeight: 0.0,
-                socialWeight: -0.9, // Authoritarian / Central Control
+                socialWeight: -0.9, 
                 partyStances: {
                     "Podemos": "En desacuerdo. Defienden el modelo autonómico y plurinacional.",
                     "Sumar / F. Amplio": "En desacuerdo. Apuestan por profundizar el estado federal.",
@@ -732,9 +731,6 @@
         ];
 
         // --- PARTY BENCHMARK COORDINATES (In Nolan Classic SVG Space: 0 to 600) ---
-        // Center is (300, 300).
-        // X-axis: Economic Freedom (Left: low X ~ 100, Right: high X ~ 500)
-        // Y-axis: Personal Freedom (Authoritarian: low Y ~ 500, Libertarian: high Y ~ 100)
         const partiesData = {
             "Podemos": { x: 140, y: 240, color: "#a855f7" },
             "Sumar / F. Amplio": { x: 170, y: 210, color: "#ec4899" },
@@ -745,7 +741,7 @@
 
         // --- APP STATE ---
         let currentQuestionIndex = 0;
-        let userAnswers = []; // stores scores 1 to 5 for each question
+        let userAnswers = []; 
 
         // --- DOM ELEMENTS ---
         const viewIntro = document.getElementById('view-intro');
@@ -784,9 +780,7 @@
         }
 
         function answerQuestion(score) {
-            // score ranges 1 to 5. Neutral is 3.
-            // Map 1..5 to -2..+2 scale
-            const normalizedScore = score - 3; // -2, -1, 0, 1, 2
+            const normalizedScore = score - 3; 
             userAnswers[currentQuestionIndex] = normalizedScore;
 
             if (currentQuestionIndex < questionsData.length - 1) {
@@ -809,50 +803,36 @@
             viewResults.classList.remove('hidden');
             window.scrollTo({ top: 0, behavior: 'smooth' });
 
-            // Compute user raw economic & social accumulation
             let totalEcon = 0;
             let totalSocial = 0;
 
             questionsData.forEach((q, idx) => {
-                const ans = userAnswers[idx]; // -2 to +2
+                const ans = userAnswers[idx]; 
                 totalEcon += ans * q.econWeight;
                 totalSocial += ans * q.socialWeight;
             });
 
-            // Normalize totals to SVG coordinates (0 to 600, Center is 300,300)
-            // Max possible score roughly: 24 questions * max weight ~ 24 * 2 = 48
             const maxScore = 36;
             
-            // X-axis (Economic Freedom): Left (- max) to Right (+ max)
-            // In SVG: X goes from 100 (left/interventionist) to 500 (right/free market)
             let svgX = 300 + (totalEcon / maxScore) * 180;
             svgX = Math.max(80, Math.min(520, svgX));
 
-            // Y-axis (Personal Freedom): Authoritarian (down ~ 500) to Libertarian (up ~ 100)
-            // Note: In SVG, top is Y=0, bottom is Y=600. So Libertarian is UP (lower Y value), Authoritarian is DOWN (higher Y value).
             let svgY = 300 - (totalSocial / maxScore) * 180;
             svgY = Math.max(80, Math.min(520, svgY));
 
-            // Move User Marker on SVG
             const userMarker = document.getElementById('user-marker');
             userMarker.setAttribute('transform', `translate(${svgX}, ${svgY})`);
 
-            // Calculate Euclidean distances & affinities for each party
             const affinities = [];
-            const maxPossibleDistance = Math.sqrt(Math.pow(600, 2) + Math.pow(600, 2));
-
             for (const [partyName, coords] of Object.entries(partiesData)) {
                 const dist = Math.sqrt(Math.pow(svgX - coords.x, 2) + Math.pow(svgY - coords.y, 2));
-                // Convert distance to percentage affinity (closer distance = higher affinity)
                 let affinityPercent = Math.max(0, Math.round(100 - (dist / 450) * 100));
                 affinityPercent = Math.min(99, Math.max(12, affinityPercent));
                 affinities.push({ name: partyName, affinity: affinityPercent, color: coords.color });
             }
 
-            // Sort descending by affinity
             affinities.sort((a, b) => b.affinity - a.affinity);
 
-            // Render Affinity Bars
             const affinityList = document.getElementById('affinity-list');
             affinityList.innerHTML = '';
             affinities.forEach(item => {
@@ -872,7 +852,6 @@
                 `;
             });
 
-            // Render Transparent Review & Sources
             const reviewList = document.getElementById('review-list');
             reviewList.innerHTML = '';
             questionsData.forEach((q, idx) => {
