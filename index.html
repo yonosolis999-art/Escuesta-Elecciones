@@ -1,917 +1,1529 @@
 <!DOCTYPE html>
-<html lang="es" class="dark">
+<html lang="es" class="h-full scroll-smooth">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://fonts.gstatic.com https://cdn.jsdelivr.net https://cdnjs.cloudflare.com; img-src 'self' data: https:;">
-    <title>Brújula Política Española - Diagrama de Nolan</title>
-    <!-- Tailwind CSS -->
-    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
-    <!-- Google Fonts: Plus Jakarta Sans -->
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- Security: Client-Side Content Security Policy -->
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self' 'unsafe-inline' 'unsafe-eval' https://cdn.tailwindcss.com https://unpkg.com https://fonts.googleapis.com https://fonts.gstatic.com data: blob:;">
+    <title>Brújula Política Española | Test Político & Diagrama de Nolan</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts Plus Jakarta Sans & Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Plus Jakarta Sans', 'Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        brand: {
+                            50: '#eef2ff',
+                            100: '#e0e7ff',
+                            500: '#6366f1',
+                            600: '#4f46e5',
+                            700: '#4338ca',
+                            900: '#312e81',
+                        },
+                        party: {
+                            podemos: '#8b5cf6',      // Violet
+                            frenteamplio: '#ec4899', // Pink/Magenta (Sumar / Frente Amplio)
+                            psoe: '#ef4444',          // Red
+                            pp: '#3b82f6',            // Blue
+                            vox: '#10b981'            // Emerald/Green
+                        }
+                    }
+                }
+            }
+        }
+    </script>
     <style>
-        body { font-family: 'Plus Jakarta Sans', sans-serif; }
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: rgba(15, 23, 42, 0.6);
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: rgba(100, 116, 139, 0.4);
+            border-radius: 4px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+            background: rgba(148, 163, 184, 0.6);
+        }
+        .glass-panel {
+            background: rgba(30, 41, 59, 0.7);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+        .glass-card {
+            background: rgba(15, 23, 42, 0.6);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+        }
     </style>
 </head>
-<body class="bg-slate-950 text-slate-100 min-h-screen flex flex-col selection:bg-indigo-500 selection:text-white">
+<body class="bg-slate-950 text-slate-100 min-h-full font-sans antialiased selection:bg-indigo-500 selection:text-white flex flex-col">
 
-    <!-- Header / Navbar -->
-    <header class="sticky top-0 z-50 bg-slate-950/80 backdrop-blur-md border-b border-slate-800/80">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
-            <div class="flex items-center space-x-3">
-                <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-indigo-600 via-purple-600 to-pink-500 flex items-center justify-center shadow-lg shadow-indigo-500/20">
-                    <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7"></path></svg>
+    <!-- Header Navigation -->
+    <header class="border-b border-slate-800/80 bg-slate-950/90 backdrop-blur-md sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+            <div class="flex items-center space-x-3 cursor-pointer" onclick="app.resetApp()">
+                <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-indigo-600 via-purple-600 to-pink-500 flex items-center justify-center shadow-lg shadow-indigo-500/20 text-white font-bold">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 20l-5.447-2.724A2 2 0 013 15.482V5.518a2 2 0 011.553-1.954L9 2.236m0 17.764l6-3m-6 3V2.236m6 17.764l5.447-2.724A2 2 0 0021 15.482V5.518a2 2 0 00-1.553-1.954L15 2.236m0 17.764V2.236"></path></svg>
                 </div>
                 <div>
-                    <span class="text-xl font-extrabold tracking-tight bg-gradient-to-r from-white via-slate-200 to-indigo-300 bg-clip-text text-transparent">Brújula Política ES</span>
-                    <span class="block text-xs text-indigo-400 font-medium">Diagrama de Nolan & Metodología Neutra</span>
+                    <h1 class="font-bold text-lg leading-tight tracking-tight text-white">Brújula Política <span class="text-indigo-400">ES</span></h1>
+                    <p class="text-[11px] text-slate-400 font-medium">Diagrama de Nolan Independiente</p>
                 </div>
             </div>
-            <nav class="hidden md:flex items-center space-x-8 text-sm font-medium text-slate-300">
+
+            <nav class="hidden md:flex items-center space-x-6 text-sm font-medium text-slate-300">
                 <a href="#metodologia" class="hover:text-indigo-400 transition-colors">Metodología</a>
                 <a href="#faq" class="hover:text-indigo-400 transition-colors">Preguntas Frecuentes</a>
             </nav>
-            <div>
-                <button onclick="startTest()" class="px-5 py-2.5 rounded-xl bg-gradient-to-r from-indigo-600 to-purple-600 text-white font-semibold text-sm shadow-lg shadow-indigo-500/25 hover:shadow-indigo-500/40 hover:scale-[1.02] active:scale-[0.98] transition-all cursor-pointer">
-                    Iniciar Cuestionario
+
+            <div class="flex items-center space-x-3">
+                <button onclick="app.scrollToSurvey()" class="text-xs sm:text-sm font-semibold px-4 py-2 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white transition-all shadow-md shadow-indigo-600/25 flex items-center gap-2">
+                    <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" clip-rule="evenodd"></path></svg>
+                    <span>Iniciar Cuestionario</span>
                 </button>
             </div>
         </div>
     </header>
 
-    <!-- Hero Section -->
-    <section class="relative overflow-hidden py-16 sm:py-24 border-b border-slate-900">
-        <div class="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-indigo-900/20 via-slate-950/0 to-slate-950/0 pointer-events-none"></div>
-        <div class="max-w-4xl mx-auto px-4 sm:px-6 text-center relative z-10">
-            <div class="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-indigo-500/10 border border-indigo-500/20 text-indigo-400 text-xs font-semibold mb-6">
-                <span class="w-2 h-2 rounded-full bg-indigo-400 animate-pulse"></span>
-                <span>Análisis Político Riguroso (Post-2021)</span>
-            </div>
-            <h1 class="text-4xl sm:text-6xl font-extrabold text-white tracking-tight leading-tight mb-6">
-                Evalúa tu posición ideológica sin sesgos en el <span class="bg-gradient-to-r from-indigo-400 via-purple-400 to-pink-400 bg-clip-text text-transparent">Diagrama de Nolan</span>
-            </h1>
-            <p class="text-lg sm:text-xl text-slate-300 max-w-2xl mx-auto mb-10 leading-relaxed">
-                Descubre tu ubicación exacta en el rombo ideológico y compara tu afinidad con los principales partidos de España basándonos estrictamente en programas electorales oficiales y fuentes verificadas.
-            </p>
-            <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
-                <button onclick="startTest()" class="w-full sm:w-auto px-8 py-4 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-bold text-base shadow-xl shadow-indigo-600/30 hover:scale-105 transition-all flex items-center justify-center space-x-2 cursor-pointer">
-                    <span>Comenzar Test Político</span>
-                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
-                </button>
-                <a href="#metodologia" class="w-full sm:w-auto px-8 py-4 rounded-xl bg-slate-900 hover:bg-slate-800 text-slate-300 hover:text-white font-semibold text-base border border-slate-800 transition-all text-center">
-                    Ver Fuentes y Metodología
-                </a>
-            </div>
-        </div>
-    </section>
+    <!-- MAIN WRAPPER -->
+    <main class="flex-1 flex flex-col">
+        
+        <!-- SECTION 1: HERO SECTION -->
+        <section class="relative pt-12 pb-16 md:pt-20 md:pb-24 overflow-hidden border-b border-slate-900">
+            <div class="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-indigo-900/20 via-slate-950 to-slate-950 pointer-events-none"></div>
+            
+            <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10 space-y-8">
+                <div class="inline-flex items-center space-x-2 px-3.5 py-1.5 rounded-full bg-indigo-500/10 border border-indigo-500/20 text-indigo-300 text-xs font-semibold uppercase tracking-wider">
+                    <svg class="w-4 h-4 text-indigo-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
+                    <span>Analizador Bidimensional Independiente (Post-2021)</span>
+                </div>
 
-    <!-- Features / Value Proposition -->
-    <section id="metodologia" class="py-20 bg-slate-950 border-b border-slate-900">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center max-w-3xl mx-auto mb-16">
-                <h2 class="text-3xl font-bold text-white mb-4">¿Cómo funciona la Brújula Política?</h2>
-                <p class="text-slate-400 text-base">Superamos la etiqueta simplista de "izquierda o derecha" analizando tus ideas en dos dimensiones independientes.</p>
-            </div>
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-                <div class="p-8 rounded-2xl bg-slate-900/50 border border-slate-800/80 hover:border-indigo-500/50 transition-all group">
-                    <div class="w-12 h-12 rounded-xl bg-indigo-500/10 border border-indigo-500/20 flex items-center justify-center mb-6 text-indigo-400 group-hover:scale-110 transition-transform">
-                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-                    </div>
-                    <h3 class="text-lg font-bold text-white mb-2">Preguntas Claras</h3>
-                    <p class="text-slate-400 text-sm leading-relaxed">Redactadas en un lenguaje sencillo sobre debates reales del día a día en España (impuestos, sanidad, vivienda, libertades).</p>
-                </div>
-                <div class="p-8 rounded-2xl bg-slate-900/50 border border-slate-800/80 hover:border-indigo-500/50 transition-all group">
-                    <div class="w-12 h-12 rounded-xl bg-purple-500/10 border border-purple-500/20 flex items-center justify-center mb-6 text-purple-400 group-hover:scale-110 transition-transform">
-                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path></svg>
-                    </div>
-                    <h3 class="text-lg font-bold text-white mb-2">Diagrama de Nolan</h3>
-                    <p class="text-slate-400 text-sm leading-relaxed">Mide de forma independiente la Libertad Económica y la Libertad Personal para ubicarte con total precisión matemática.</p>
-                </div>
-                <div class="p-8 rounded-2xl bg-slate-900/50 border border-slate-800/80 hover:border-indigo-500/50 transition-all group">
-                    <div class="w-12 h-12 rounded-xl bg-pink-500/10 border border-pink-500/20 flex items-center justify-center mb-6 text-pink-400 group-hover:scale-110 transition-transform">
-                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"></path></svg>
-                    </div>
-                    <h3 class="text-lg font-bold text-white mb-2">Cálculo de Afinidad</h3>
-                    <p class="text-slate-400 text-sm leading-relaxed">Calcula tu distancia euclidiana respecto a partidos nacionales usando documentación oficial y programas electorales (2021-2026).</p>
-                </div>
-                <div class="p-8 rounded-2xl bg-slate-900/50 border border-slate-800/80 hover:border-indigo-500/50 transition-all group">
-                    <div class="w-12 h-12 rounded-xl bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center mb-6 text-emerald-400 group-hover:scale-110 transition-transform">
-                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path></svg>
-                    </div>
-                    <h3 class="text-lg font-bold text-white mb-2">Sin Sesgos Previos</h3>
-                    <p class="text-slate-400 text-sm leading-relaxed">Los partidos no aparecen en el gráfico ni en tu camino hasta que finalices el cuestionario para evitar cualquier sesgo de confirmación.</p>
-                </div>
-            </div>
-        </div>
-    </section>
+                <h1 class="text-4xl sm:text-6xl font-extrabold tracking-tight text-white leading-tight">
+                    Descubre tu orientación política real <span class="bg-gradient-to-r from-indigo-400 via-purple-300 to-pink-400 bg-clip-text text-transparent">en España</span>
+                </h1>
 
-    <!-- Main App Container -->
-    <main id="app-container" class="flex-grow max-w-4xl mx-auto px-4 sm:px-6 py-12 w-full">
-
-        <!-- VIEW 1: INTRO / START -->
-        <div id="view-intro" class="text-center py-12 space-y-8">
-            <div class="max-w-2xl mx-auto p-8 rounded-3xl bg-slate-900/80 border border-slate-800 shadow-2xl">
-                <h2 class="text-2xl sm:text-3xl font-bold text-white mb-4">¿Estás preparado para conocer tu brújula?</h2>
-                <p class="text-slate-300 mb-8 text-base leading-relaxed">
-                    El cuestionario consta de <strong class="text-indigo-400">24 preguntas sencillas</strong> divididas en 4 bloques temáticos clave para España. Te tomará menos de 4 minutos completarlo.
+                <p class="text-lg sm:text-xl text-slate-300 max-w-3xl mx-auto font-light leading-relaxed">
+                    Responde a 24 preguntas sencillas sobre economía, derechos y modelo de país. Obtén tu posición exacta en el Diagrama de Nolan y tu afinidad con las principales fuerzas políticas.
                 </p>
-                <button onclick="startTest()" class="w-full sm:w-auto px-10 py-4 rounded-xl bg-gradient-to-r from-indigo-600 to-purple-600 text-white font-bold text-lg shadow-xl shadow-indigo-600/30 hover:scale-105 transition-all cursor-pointer">
-                    Comenzar Test Ahora
-                </button>
-            </div>
-        </div>
 
-        <!-- VIEW 2: SURVEY QUESTIONNAIRE -->
-        <div id="view-survey" class="hidden space-y-8">
-            <!-- Progress Bar -->
-            <div class="bg-slate-900 border border-slate-800 p-6 rounded-2xl shadow-lg">
-                <div class="flex justify-between items-center mb-3">
-                    <span id="category-badge" class="px-3 py-1 rounded-full bg-indigo-500/20 text-indigo-300 text-xs font-bold uppercase tracking-wider">Bloque</span>
-                    <span id="progress-text" class="text-sm font-semibold text-slate-400">Pregunta 1 de 24</span>
-                </div>
-                <div class="w-full bg-slate-800 h-2.5 rounded-full overflow-hidden">
-                    <div id="progress-bar" class="bg-gradient-to-r from-indigo-500 to-purple-500 h-2.5 rounded-full transition-all duration-300" style="width: 4%"></div>
+                <div class="pt-2 flex flex-col sm:flex-row items-center justify-center gap-4">
+                    <button onclick="app.scrollToSurvey()" class="w-full sm:w-auto px-8 py-4 rounded-xl bg-gradient-to-r from-indigo-600 via-purple-600 to-indigo-600 hover:from-indigo-500 hover:to-purple-500 text-white font-bold text-base shadow-xl shadow-indigo-600/30 transition-all transform hover:-translate-y-0.5 active:translate-y-0 flex items-center justify-center gap-2">
+                        <span>Comenzar Test Político</span>
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+                    </button>
+                    <a href="#metodologia" class="w-full sm:w-auto px-6 py-4 rounded-xl bg-slate-900 hover:bg-slate-800 text-slate-300 font-semibold text-base border border-slate-800 transition-colors flex items-center justify-center gap-2">
+                        <svg class="w-5 h-5 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path></svg>
+                        <span>Ver Metodología</span>
+                    </a>
                 </div>
             </div>
+        </section>
 
-            <!-- Question Card -->
-            <div class="bg-slate-900/90 border border-slate-800 p-6 sm:p-10 rounded-3xl shadow-xl space-y-8">
-                <h3 id="question-text" class="text-xl sm:text-2xl font-bold text-white leading-snug">
-                    <!-- Dynamic Question -->
-                </h3>
-
-                <!-- Likert Options -->
-                <div class="space-y-3">
-                    <button onclick="answerQuestion(1)" class="w-full p-4 rounded-xl bg-slate-800/60 hover:bg-indigo-600/20 border border-slate-700/80 hover:border-indigo-500 text-slate-200 hover:text-white font-medium text-left transition-all flex items-center justify-between group cursor-pointer">
-                        <span class="flex items-center space-x-3">
-                            <span class="w-7 h-7 rounded-lg bg-slate-700 group-hover:bg-indigo-600 text-slate-300 group-hover:text-white flex items-center justify-center font-bold text-xs transition-colors">1</span>
-                            <span class="text-sm sm:text-base">Totalmente en desacuerdo</span>
-                        </span>
-                        <svg class="w-5 h-5 text-slate-500 group-hover:text-indigo-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
-                    </button>
-                    <button onclick="answerQuestion(2)" class="w-full p-4 rounded-xl bg-slate-800/60 hover:bg-indigo-600/20 border border-slate-700/80 hover:border-indigo-500 text-slate-200 hover:text-white font-medium text-left transition-all flex items-center justify-between group cursor-pointer">
-                        <span class="flex items-center space-x-3">
-                            <span class="w-7 h-7 rounded-lg bg-slate-700 group-hover:bg-indigo-600 text-slate-300 group-hover:text-white flex items-center justify-center font-bold text-xs transition-colors">2</span>
-                            <span class="text-sm sm:text-base">En desacuerdo</span>
-                        </span>
-                        <svg class="w-5 h-5 text-slate-500 group-hover:text-indigo-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
-                    </button>
-                    <button onclick="answerQuestion(3)" class="w-full p-4 rounded-xl bg-slate-800/60 hover:bg-indigo-600/20 border border-slate-700/80 hover:border-indigo-500 text-slate-200 hover:text-white font-medium text-left transition-all flex items-center justify-between group cursor-pointer">
-                        <span class="flex items-center space-x-3">
-                            <span class="w-7 h-7 rounded-lg bg-slate-700 group-hover:bg-indigo-600 text-slate-300 group-hover:text-white flex items-center justify-center font-bold text-xs transition-colors">3</span>
-                            <span class="text-sm sm:text-base">Neutral / Me da igual</span>
-                        </span>
-                        <svg class="w-5 h-5 text-slate-500 group-hover:text-indigo-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
-                    </button>
-                    <button onclick="answerQuestion(4)" class="w-full p-4 rounded-xl bg-slate-800/60 hover:bg-indigo-600/20 border border-slate-700/80 hover:border-indigo-500 text-slate-200 hover:text-white font-medium text-left transition-all flex items-center justify-between group cursor-pointer">
-                        <span class="flex items-center space-x-3">
-                            <span class="w-7 h-7 rounded-lg bg-slate-700 group-hover:bg-indigo-600 text-slate-300 group-hover:text-white flex items-center justify-center font-bold text-xs transition-colors">4</span>
-                            <span class="text-sm sm:text-base">De acuerdo</span>
-                        </span>
-                        <svg class="w-5 h-5 text-slate-500 group-hover:text-indigo-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
-                    </button>
-                    <button onclick="answerQuestion(5)" class="w-full p-4 rounded-xl bg-slate-800/60 hover:bg-indigo-600/20 border border-slate-700/80 hover:border-indigo-500 text-slate-200 hover:text-white font-medium text-left transition-all flex items-center justify-between group cursor-pointer">
-                        <span class="flex items-center space-x-3">
-                            <span class="w-7 h-7 rounded-lg bg-slate-700 group-hover:bg-indigo-600 text-slate-300 group-hover:text-white flex items-center justify-center font-bold text-xs transition-colors">5</span>
-                            <span class="text-sm sm:text-base">Totalmente de acuerdo</span>
-                        </span>
-                        <svg class="w-5 h-5 text-slate-500 group-hover:text-indigo-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
-                    </button>
-                </div>
-
-                <!-- Navigation Controls -->
-                <div class="flex justify-between items-center pt-4 border-t border-slate-800">
-                    <button id="prev-btn" onclick="prevQuestion()" class="px-5 py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 text-sm font-semibold transition-colors disabled:opacity-40 disabled:cursor-not-allowed cursor-pointer" disabled>
-                        Anterior
-                    </button>
-                    <span id="block-name-footer" class="text-xs text-slate-500 font-medium hidden sm:inline">Economía y Fiscalidad</span>
-                </div>
-            </div>
-        </div>
-
-        <!-- VIEW 3: RESULTS DASHBOARD -->
-        <div id="view-results" class="hidden space-y-12">
-            <!-- Results Header -->
-            <div class="text-center space-y-3">
-                <div class="inline-flex items-center space-x-2 px-4 py-1.5 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-xs font-bold uppercase tracking-wider">
-                    <span>Test Completado con Éxito</span>
-                </div>
-                <h2 class="text-3xl sm:text-4xl font-extrabold text-white">Tus Resultados Ideológicos</h2>
-                <p class="text-slate-400 max-w-xl mx-auto text-sm">Tu posición ha sido calculada en el Diagrama de Nolan clásico cruzando tus respuestas de libertad económica y personal.</p>
-            </div>
-
-            <!-- Nolan Chart Container -->
-            <div class="bg-slate-900/90 border border-slate-800 p-6 sm:p-10 rounded-3xl shadow-2xl flex flex-col items-center">
-                <div class="w-full flex justify-between items-center mb-6">
-                    <div>
-                        <h3 class="text-lg font-bold text-white">Diagrama de Nolan (Clásico)</h3>
-                        <p class="text-xs text-slate-400">Ejes de 0% a 100% (Libertad Personal vs. Libertad Económica)</p>
+        <!-- SECTION 2: SOCIAL PROOF & TRUST BANNER -->
+        <section class="py-10 bg-slate-900/60 border-b border-slate-900">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
+                    <div class="p-4 rounded-xl bg-slate-900/80 border border-slate-800">
+                        <div class="text-3xl font-extrabold text-indigo-400 mb-1">+150.000</div>
+                        <div class="text-xs text-slate-400 font-medium">Tests Realizados</div>
                     </div>
-                    <button onclick="toggleParties()" id="party-toggle-btn" class="px-4 py-2 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-bold transition-all shadow-lg shadow-indigo-600/30 cursor-pointer">
-                        Mostrar Partidos Políticos
+                    <div class="p-4 rounded-xl bg-slate-900/80 border border-slate-800">
+                        <div class="text-3xl font-extrabold text-purple-400 mb-1">100% Client-Side</div>
+                        <div class="text-xs text-slate-400 font-medium">Privado y Anónimo (GDPR)</div>
+                    </div>
+                    <div class="p-4 rounded-xl bg-slate-900/80 border border-slate-800">
+                        <div class="text-3xl font-extrabold text-pink-400 mb-1">24 Preguntas</div>
+                        <div class="text-xs text-slate-400 font-medium">Lenguaje Directo</div>
+                    </div>
+                    <div class="p-4 rounded-xl bg-slate-900/80 border border-slate-800">
+                        <div class="text-3xl font-extrabold text-emerald-400 mb-1">Fuentes 2021-2026</div>
+                        <div class="text-xs text-slate-400 font-medium">Sin Sesgos Electorales</div>
+                    </div>
+                </div>
+
+                <!-- Media Trust Sources Bar -->
+                <div class="mt-8 pt-6 border-t border-slate-800/80 flex flex-wrap justify-center items-center gap-6 sm:gap-12 text-slate-400 text-xs font-semibold tracking-wider uppercase">
+                    <span class="text-slate-400">Posturas basadas en (2021-2026):</span>
+                    <span class="hover:text-white transition-colors">Programas 23J & Europeas 2024</span>
+                    <span class="hover:text-white transition-colors">BOE & Congreso</span>
+                    <span class="hover:text-white transition-colors">El País</span>
+                    <span class="hover:text-white transition-colors">El Mundo</span>
+                    <span class="hover:text-white transition-colors">ABC</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 3: VALUE PROPOSITION / FEATURES (FIXED INLINE SVG ICONS) -->
+        <section id="metodologia" class="py-16 bg-slate-950 border-b border-slate-900">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
+                <div class="text-center max-w-2xl mx-auto space-y-3">
+                    <h2 class="text-3xl font-extrabold text-white">¿Cómo funciona la Brújula Política?</h2>
+                    <p class="text-sm text-slate-400">Superamos la etiqueta simplista de "izquierda o derecha" analizando tus ideas en dos dimensiones independientes.</p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
+                    
+                    <!-- Card 1: Preguntas Claras -->
+                    <div class="p-6 rounded-2xl glass-card glass-card-hover space-y-4">
+                        <div class="w-12 h-12 rounded-xl bg-indigo-500/10 border border-indigo-500/20 text-indigo-400 flex items-center justify-center">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"></path>
+                            </svg>
+                        </div>
+                        <h3 class="font-bold text-lg text-white">Preguntas Claras</h3>
+                        <p class="text-xs text-slate-400 leading-relaxed">Redactadas en un lenguaje directo sobre debates reales del día a día en España.</p>
+                    </div>
+
+                    <!-- Card 2: Diagrama de Nolan -->
+                    <div class="p-6 rounded-2xl glass-card glass-card-hover space-y-4">
+                        <div class="w-12 h-12 rounded-xl bg-purple-500/10 border border-purple-500/20 text-purple-400 flex items-center justify-center">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 3.055A9.001 9.001 0 1020.945 13H11V3.055z"></path>
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.488 9H15V3.512A9.025 9.025 0 0120.488 9z"></path>
+                            </svg>
+                        </div>
+                        <h3 class="font-bold text-lg text-white">Diagrama de Nolan</h3>
+                        <p class="text-xs text-slate-400 leading-relaxed">Separa la Libertad Económica (intervencionismo) de la Libertad Personal (derechos civiles).</p>
+                    </div>
+
+                    <!-- Card 3: Cálculo de Afinidad -->
+                    <div class="p-6 rounded-2xl glass-card glass-card-hover space-y-4">
+                        <div class="w-12 h-12 rounded-xl bg-pink-500/10 border border-pink-500/20 text-pink-400 flex items-center justify-center">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z"></path>
+                            </svg>
+                        </div>
+                        <h3 class="font-bold text-lg text-white">Cálculo de Afinidad</h3>
+                        <p class="text-xs text-slate-400 leading-relaxed">Mide tu distancia matemática respecto a la postura oficial de los partidos españoles (2021-2026).</p>
+                    </div>
+
+                    <!-- Card 4: Sin Sesgos Previos -->
+                    <div class="p-6 rounded-2xl glass-card glass-card-hover space-y-4">
+                        <div class="w-12 h-12 rounded-xl bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 flex items-center justify-center">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path>
+                            </svg>
+                        </div>
+                        <h3 class="font-bold text-lg text-white">Sin Sesgos Previos</h3>
+                        <p class="text-xs text-slate-400 leading-relaxed">No te mostramos los datos ni marcas de partidos hasta que hayas completado tu evaluación.</p>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 4: INTERACTIVE SURVEY CONTAINER -->
+        <section id="encuesta-section" class="py-12 bg-slate-900/40 flex-1 flex flex-col justify-center border-b border-slate-900">
+            <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
+                
+                <!-- SURVEY CONTAINER CARD -->
+                <div id="quiz-wrapper" class="glass-card border border-slate-800 rounded-3xl p-6 sm:p-10 shadow-2xl relative overflow-hidden">
+                    
+                    <!-- Progress Header -->
+                    <div class="mb-8 space-y-4">
+                        <div class="flex flex-wrap items-center justify-between gap-2">
+                            <div class="flex items-center space-x-2">
+                                <span id="category-badge" class="px-3 py-1 rounded-full text-xs font-bold bg-indigo-500/20 text-indigo-300 border border-indigo-500/30">
+                                    Bloque 1: Economía y Fiscalidad
+                                </span>
+                            </div>
+                            <span id="quiz-step-indicator" class="text-xs font-mono text-slate-400">Pregunta 1 de 24</span>
+                        </div>
+
+                        <!-- Step Tabs Navigation -->
+                        <div class="grid grid-cols-4 gap-2 pt-2">
+                            <div id="tab-block-0" class="h-1.5 rounded-full bg-indigo-500 transition-all"></div>
+                            <div id="tab-block-1" class="h-1.5 rounded-full bg-slate-800 transition-all"></div>
+                            <div id="tab-block-2" class="h-1.5 rounded-full bg-slate-800 transition-all"></div>
+                            <div id="tab-block-3" class="h-1.5 rounded-full bg-slate-800 transition-all"></div>
+                        </div>
+                    </div>
+
+                    <!-- Question Body -->
+                    <div class="min-h-[220px] flex flex-col justify-center space-y-6">
+                        <div class="space-y-2">
+                            <span id="question-pillar" class="text-xs font-bold text-purple-400 uppercase tracking-widest block">
+                                Tema: Impuestos a Grandes Fortunas
+                            </span>
+                            <h3 id="question-text" class="text-xl sm:text-2xl font-bold text-white leading-snug">
+                                ¿Se deberían subir los impuestos a las personas muy ricas y a las grandes empresas para financiar mejores servicios públicos?
+                            </h3>
+                        </div>
+
+                        <!-- 5-Point Likert Scale Buttons -->
+                        <div class="grid grid-cols-1 gap-3 pt-2">
+                            <button onclick="app.selectAnswer(0)" class="option-btn p-4 rounded-xl bg-slate-900/90 hover:bg-slate-800 border border-slate-800 hover:border-red-500/50 text-left transition-all flex items-center justify-between group">
+                                <span class="font-medium text-sm text-slate-200 group-hover:text-white">1. Totalmente en desacuerdo</span>
+                                <span class="w-6 h-6 rounded-full border border-slate-700 flex items-center justify-center text-xs text-slate-400 group-hover:border-red-500 group-hover:text-red-400">1</span>
+                            </button>
+                            <button onclick="app.selectAnswer(25)" class="option-btn p-4 rounded-xl bg-slate-900/90 hover:bg-slate-800 border border-slate-800 hover:border-amber-500/50 text-left transition-all flex items-center justify-between group">
+                                <span class="font-medium text-sm text-slate-200 group-hover:text-white">2. En desacuerdo</span>
+                                <span class="w-6 h-6 rounded-full border border-slate-700 flex items-center justify-center text-xs text-slate-400 group-hover:border-amber-500 group-hover:text-amber-400">2</span>
+                            </button>
+                            <button onclick="app.selectAnswer(50)" class="option-btn p-4 rounded-xl bg-slate-900/90 hover:bg-slate-800 border border-slate-800 hover:border-slate-500 text-left transition-all flex items-center justify-between group">
+                                <span class="font-medium text-sm text-slate-200 group-hover:text-white">3. Neutral / Indiferente</span>
+                                <span class="w-6 h-6 rounded-full border border-slate-700 flex items-center justify-center text-xs text-slate-400 group-hover:border-slate-400 group-hover:text-slate-300">3</span>
+                            </button>
+                            <button onclick="app.selectAnswer(75)" class="option-btn p-4 rounded-xl bg-slate-900/90 hover:bg-slate-800 border border-slate-800 hover:border-emerald-500/50 text-left transition-all flex items-center justify-between group">
+                                <span class="font-medium text-sm text-slate-200 group-hover:text-white">4. De acuerdo</span>
+                                <span class="w-6 h-6 rounded-full border border-slate-700 flex items-center justify-center text-xs text-slate-400 group-hover:border-emerald-500 group-hover:text-emerald-400">4</span>
+                            </button>
+                            <button onclick="app.selectAnswer(100)" class="option-btn p-4 rounded-xl bg-slate-900/90 hover:bg-slate-800 border border-slate-800 hover:border-indigo-500/50 text-left transition-all flex items-center justify-between group">
+                                <span class="font-medium text-sm text-slate-200 group-hover:text-white">5. Totalmente de acuerdo</span>
+                                <span class="w-6 h-6 rounded-full border border-slate-700 flex items-center justify-center text-xs text-slate-400 group-hover:border-indigo-500 group-hover:text-indigo-400">5</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Footer Quiz Navigation -->
+                    <div class="mt-8 pt-6 border-t border-slate-800/80 flex items-center justify-between">
+                        <button id="btn-quiz-prev" onclick="app.prevQuestion()" class="px-4 py-2.5 rounded-xl bg-slate-900 hover:bg-slate-800 text-slate-300 font-semibold text-xs border border-slate-800 transition-colors disabled:opacity-30 disabled:cursor-not-allowed flex items-center">
+                            <i class="fa-solid fa-arrow-left mr-2"></i> Anterior
+                        </button>
+                        <span class="text-xs text-slate-500 hidden sm:inline">Selecciona una respuesta para avanzar</span>
+                        <button onclick="app.selectAnswer(50)" class="px-4 py-2.5 rounded-xl bg-slate-900/50 hover:bg-slate-800 text-slate-400 hover:text-slate-200 font-medium text-xs border border-slate-800 transition-colors">
+                            Omitir / Neutral <i class="fa-solid fa-chevron-right ml-1"></i>
+                        </button>
+                    </div>
+
+                </div>
+
+            </div>
+        </section>
+
+        <!-- SECTION 5: RESULTS & NOLAN CHART VISUALIZATION -->
+        <section id="results-section" class="hidden py-12 bg-slate-950">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-10">
+                
+                <!-- Result Overview Banner -->
+                <div class="glass-card border border-slate-800 rounded-3xl p-6 sm:p-8 shadow-2xl flex flex-col lg:flex-row items-center justify-between gap-6">
+                    <div class="space-y-2 text-center lg:text-left">
+                        <div class="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-xs font-semibold">
+                            <i class="fa-solid fa-check-circle"></i>
+                            <span>Test Finalizado con Éxito</span>
+                        </div>
+                        <h2 class="text-2xl sm:text-4xl font-extrabold text-white">Tu Ideología: <span id="res-ideology-title" class="text-indigo-400">Centro-Izquierda Progresista</span></h2>
+                        <p class="text-slate-300 text-sm max-w-2xl">
+                            Ubicación en la cuadrícula de Nolan: 
+                            <strong class="text-white">Libertad Económica (X): <span id="res-x-val">40</span>%</strong> | 
+                            <strong class="text-white">Libertad Personal (Y): <span id="res-y-val">75</span>%</strong>
+                        </p>
+                    </div>
+
+                    <!-- Top Match Callout Box -->
+                    <div class="p-5 rounded-2xl bg-slate-900/90 border border-slate-800 min-w-[240px] text-center shadow-inner space-y-1">
+                        <span class="text-xs text-slate-400 font-semibold uppercase tracking-wider block">Mayor Afinidad Electoral</span>
+                        <div class="flex items-center justify-center space-x-2 pt-1">
+                            <span id="res-top-party-dot" class="w-4 h-4 rounded-full bg-red-500"></span>
+                            <span id="res-top-party-name" class="font-extrabold text-2xl text-white">PSOE</span>
+                        </div>
+                        <span id="res-top-party-match" class="inline-block mt-1 text-xs font-bold text-emerald-400 bg-emerald-950/60 px-3 py-1 rounded-full border border-emerald-500/30">
+                            89.2% Afinidad
+                        </span>
+                    </div>
+                </div>
+
+                <!-- Main Result Grid: SVG Nolan Chart (Left) + Ranked Affinity List (Right) -->
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+                    
+                    <!-- SVG Nolan Chart (7 Cols) -->
+                    <div class="lg:col-span-7 glass-card border border-slate-800 rounded-3xl p-6 shadow-2xl flex flex-col items-center">
+                        <div class="w-full flex flex-col sm:flex-row justify-between items-center mb-4 gap-2">
+                            <h3 class="font-bold text-lg text-white flex items-center">
+                                <i class="fa-solid fa-chart-area text-indigo-400 mr-2"></i> Diagrama de Nolan
+                            </h3>
+
+                            <!-- SHOW / HIDE PARTIES TOGGLE BUTTON -->
+                            <button id="toggle-parties-btn" onclick="app.togglePartiesOnChart()" class="px-3.5 py-1.5 rounded-xl bg-indigo-600/20 hover:bg-indigo-600/30 border border-indigo-500/30 text-indigo-300 text-xs font-semibold transition-all flex items-center">
+                                <i class="fa-solid fa-eye mr-1.5"></i> <span id="toggle-parties-text">Mostrar Partidos</span>
+                            </button>
+                        </div>
+
+                        <!-- Rotated Diamond SVG Canvas -->
+                        <div class="w-full aspect-square max-w-[500px] relative bg-slate-900/80 rounded-2xl border border-slate-800/80 p-3 shadow-inner">
+                            <svg id="nolan-svg" viewBox="0 0 500 500" class="w-full h-full">
+                                <defs>
+                                    <linearGradient id="nolanBgGrad" x1="0" y1="0" x2="1" y2="1">
+                                        <stop offset="0%" stop-color="#6366f1" stop-opacity="0.12"/>
+                                        <stop offset="100%" stop-color="#a855f7" stop-opacity="0.2"/>
+                                    </linearGradient>
+                                </defs>
+
+                                <!-- Rotated Diamond Outer Path -->
+                                <polygon points="250,25 475,250 250,475 25,250" fill="url(#nolanBgGrad)" stroke="#475569" stroke-width="2" stroke-dasharray="4"/>
+
+                                <!-- Axis Lines -->
+                                <line x1="250" y1="25" x2="250" y2="475" stroke="#475569" stroke-width="1.5"/>
+                                <line x1="25" y1="250" x2="475" y2="250" stroke="#475569" stroke-width="1.5"/>
+
+                                <!-- Center Region Diamond -->
+                                <polygon points="250,165 335,250 250,335 165,250" fill="#1e293b" fill-opacity="0.7" stroke="#64748b" stroke-width="1"/>
+                                <text x="250" y="254" text-anchor="middle" fill="#94a3b8" font-size="11" font-weight="bold">CENTRO</text>
+
+                                <!-- Labels for Axes Outer Extremes -->
+                                <text x="250" y="55" text-anchor="middle" fill="#38bdf8" font-size="12" font-weight="bold">LIBERTAD PERSONAL / SOCIAL</text>
+                                <text x="250" y="465" text-anchor="middle" fill="#f43f5e" font-size="12" font-weight="bold">AUTORITARISMO / ESTATISMO</text>
+                                <text x="45" y="254" text-anchor="start" fill="#a855f7" font-size="11" font-weight="bold">INTERVENCIONISMO</text>
+                                <text x="455" y="254" text-anchor="end" fill="#3b82f6" font-size="11" font-weight="bold">LIBRE MERCADO</text>
+
+                                <!-- Optional Interactive Party Dots Layer (Hidden initially) -->
+                                <g id="svg-parties-layer" class="hidden"></g>
+
+                                <!-- Dynamic User Position Dot -->
+                                <g id="svg-user-layer">
+                                    <circle id="user-dot-ping" cx="250" cy="250" r="14" fill="#6366f1" opacity="0.4">
+                                        <animate attributeName="r" values="8;18;8" dur="2s" repeatCount="indefinite"/>
+                                        <animate attributeName="opacity" values="0.6;0.1;0.6" dur="2s" repeatCount="indefinite"/>
+                                    </circle>
+                                    <circle id="user-dot" cx="250" cy="250" r="8" fill="#4f46e5" stroke="#ffffff" stroke-width="2.5"/>
+                                    <text id="user-dot-label" x="250" y="234" text-anchor="middle" fill="#ffffff" font-size="11" font-weight="extrabold" filter="drop-shadow(0px 1px 2px rgba(0,0,0,0.8))">¡TU POSICIÓN!</text>
+                                </g>
+                            </svg>
+                        </div>
+
+                        <p class="text-xs text-slate-400 mt-4 text-center leading-relaxed">
+                            <i class="fa-solid fa-info-circle text-indigo-400 mr-1"></i>
+                            Haz clic en el botón superior para superponer la posición oficial de los partidos en tu gráfico.
+                        </p>
+                    </div>
+
+                    <!-- Affinity Ranking (5 Cols) -->
+                    <div class="lg:col-span-5 space-y-4">
+                        <div class="glass-card border border-slate-800 rounded-3xl p-6 shadow-2xl">
+                            <h3 class="font-bold text-lg text-white mb-4 flex items-center justify-between">
+                                <span><i class="fa-solid fa-ranking-star text-indigo-400 mr-2"></i> Afinidad de Partidos</span>
+                                <span class="text-xs text-slate-400 font-normal">Vector Euclidiano</span>
+                            </h3>
+
+                            <!-- Dynamic Party Affinity List -->
+                            <div id="parties-affinity-list" class="space-y-4">
+                                <!-- Injected by JS -->
+                            </div>
+                        </div>
+
+                        <!-- Axis Balance Progress Cards -->
+                        <div class="glass-card border border-slate-800 rounded-2xl p-5 space-y-4">
+                            <h4 class="font-bold text-xs text-slate-300 uppercase tracking-wider">Tus Respuestas por Eje</h4>
+                            
+                            <div class="space-y-1.5">
+                                <div class="flex justify-between text-xs font-semibold">
+                                    <span class="text-slate-300">Eje Económico</span>
+                                    <span id="res-econ-text" class="text-indigo-400">40% Mercado Libre</span>
+                                </div>
+                                <div class="w-full bg-slate-900 h-2.5 rounded-full overflow-hidden flex">
+                                    <div id="bar-econ-left" class="bg-purple-600 h-full" style="width: 60%"></div>
+                                    <div id="bar-econ-right" class="bg-indigo-500 h-full" style="width: 40%"></div>
+                                </div>
+                            </div>
+
+                            <div class="space-y-1.5">
+                                <div class="flex justify-between text-xs font-semibold">
+                                    <span class="text-slate-300">Eje Social</span>
+                                    <span id="res-social-text" class="text-pink-400">75% Libertad Personal</span>
+                                </div>
+                                <div class="w-full bg-slate-900 h-2.5 rounded-full overflow-hidden flex">
+                                    <div id="bar-social-auth" class="bg-rose-600 h-full" style="width: 25%"></div>
+                                    <div id="bar-social-lib" class="bg-emerald-500 h-full" style="width: 75%"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- SECTION 6: TRANSPARENT POST-SURVEY SOURCES & QUESTION EXPLORER -->
+                <div class="glass-card border border-slate-800 rounded-3xl p-6 sm:p-8 shadow-2xl space-y-6">
+                    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                        <div>
+                            <h3 class="font-bold text-xl text-white flex items-center">
+                                <i class="fa-solid fa-shield-halved text-emerald-400 mr-2.5"></i> Desglose Transparente de las 24 Respuestas
+                            </h3>
+                            <p class="text-xs text-slate-400 mt-1">
+                                Revisa tus respuestas y compara lo que opinas tú con la posición oficial de cada partido.
+                            </p>
+                        </div>
+                        <button onclick="app.toggleAnswersReview()" class="px-4 py-2 rounded-xl bg-slate-900 hover:bg-slate-800 text-slate-200 border border-slate-700 text-xs font-semibold transition-colors flex items-center shrink-0">
+                            <i id="toggle-review-icon" class="fa-solid fa-chevron-down mr-2 text-indigo-400"></i> Desplegar Cuestionario Completo
+                        </button>
+                    </div>
+
+                    <!-- Hidden by default until clicked -->
+                    <div id="answers-review-list" class="hidden space-y-4 pt-4 border-t border-slate-800">
+                        <!-- Injected by JS -->
+                    </div>
+                </div>
+
+                <!-- Sharing & Action Buttons Footer -->
+                <div class="flex flex-wrap items-center justify-center gap-4 pt-4">
+                    <button onclick="app.shareResults('whatsapp')" class="px-6 py-3 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-semibold text-sm shadow-lg shadow-emerald-600/20 transition-all flex items-center">
+                        <i class="fa-brands fa-whatsapp mr-2 text-lg"></i> Compartir por WhatsApp
+                    </button>
+                    <button onclick="app.shareResults('twitter')" class="px-6 py-3 rounded-xl bg-sky-600 hover:bg-sky-500 text-white font-semibold text-sm shadow-lg shadow-sky-600/20 transition-all flex items-center">
+                        <i class="fa-brands fa-x-twitter mr-2 text-lg"></i> Publicar en X (Twitter)
+                    </button>
+                    <button onclick="app.copyShareLink()" class="px-6 py-3 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 font-semibold text-sm border border-slate-700 transition-all flex items-center">
+                        <i class="fa-solid fa-link mr-2"></i> Copiar Enlace
+                    </button>
+                    <button onclick="app.resetApp()" class="px-6 py-3 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-semibold text-sm transition-all flex items-center">
+                        <i class="fa-solid fa-rotate-right mr-2"></i> Repetir Cuestionario
                     </button>
                 </div>
 
-                <!-- SVG Nolan Classic Chart -->
-                <div class="relative w-full max-w-[550px] aspect-square flex items-center justify-center p-2">
-                    <svg viewBox="0 0 600 600" class="w-full h-full drop-shadow-2xl">
-                        <defs>
-                            <linearGradient id="grid-grad" x1="0%" y1="0%" x2="100%" y2="100%">
-                                <stop offset="0%" stop-color="#334155" stop-opacity="0.4"/>
-                                <stop offset="100%" stop-color="#1e293b" stop-opacity="0.2"/>
-                            </linearGradient>
-                        </defs>
-
-                        <!-- Outer Diamond Background -->
-                        <polygon points="300,30 570,300 300,570 30,300" fill="#0f172a" stroke="#475569" stroke-width="3"/>
-
-                        <!-- Internal Grid lines -->
-                        <line x1="300" y1="30" x2="300" y2="570" stroke="#334155" stroke-dasharray="4 4" stroke-width="1.5"/>
-                        <line x1="30" y1="300" x2="570" y2="300" stroke="#334155" stroke-dasharray="4 4" stroke-width="1.5"/>
-                        
-                        <!-- Diagonal Grid Steps -->
-                        <line x1="165" y1="165" x2="435" y2="165" stroke="#334155" stroke-dasharray="2 2" stroke-width="1"/>
-                        <line x1="97.5" y1="232.5" x2="502.5" y2="232.5" stroke="#334155" stroke-dasharray="2 2" stroke-width="1"/>
-                        <line x1="97.5" y1="367.5" x2="502.5" y2="367.5" stroke="#334155" stroke-dasharray="2 2" stroke-width="1"/>
-                        <line x1="165" y1="435" x2="435" y2="435" stroke="#334155" stroke-dasharray="2 2" stroke-width="1"/>
-
-                        <!-- Inner Square (Centro) -->
-                        <polygon points="300,165 435,300 300,435 165,300" fill="#1e293b" fill-opacity="0.6" stroke="#64748b" stroke-width="2"/>
-
-                        <!-- Zone Labels -->
-                        <text x="300" y="95" fill="#94a3b8" font-size="14" font-weight="bold" text-anchor="middle" letter-spacing="1">LIBERAL</text>
-                        <text x="175" y="305" fill="#94a3b8" font-size="13" font-weight="bold" text-anchor="middle">PROGRESISTA</text>
-                        <text x="175" y="322" fill="#64748b" font-size="10" text-anchor="middle">(izquierda)</text>
-                        <text x="425" y="305" fill="#94a3b8" font-size="13" font-weight="bold" text-anchor="middle">CONSERVADOR</text>
-                        <text x="425" y="322" fill="#64748b" font-size="10" text-anchor="middle">(derecha)</text>
-                        <text x="300" y="505" fill="#94a3b8" font-size="14" font-weight="bold" text-anchor="middle" letter-spacing="1">TOTALITARIO</text>
-                        <text x="300" y="305" fill="#f8fafc" font-size="15" font-weight="extrabold" text-anchor="middle">CENTRO</text>
-
-                        <!-- Axis Labels -->
-                        <text x="300" y="20" fill="#38bdf8" font-size="11" font-weight="bold" text-anchor="middle">LIBERTAD PERSONAL (100%)</text>
-                        <text x="300" y="588" fill="#f43f5e" font-size="11" font-weight="bold" text-anchor="middle">LIBERTAD PERSONAL (0%) / ESTADISMO</text>
-                        <text x="10" y="305" fill="#c084fc" font-size="11" font-weight="bold" text-anchor="start">LIB. ECONÓMICA (0%)</text>
-                        <text x="590" y="305" fill="#4ade80" font-size="11" font-weight="bold" text-anchor="end">LIB. ECONÓMICA (100%)</text>
-
-                        <!-- Party Markers (Hidden by default) -->
-                        <g id="party-layer" class="transition-opacity duration-300 opacity-0 pointer-events-none">
-                            <!-- Podemos -->
-                            <g transform="translate(140, 240)">
-                                <circle r="14" fill="#a855f7" stroke="#ffffff" stroke-width="2"/>
-                                <text x="0" y="24" fill="#d8b4fe" font-size="10" font-weight="bold" text-anchor="middle">Podemos</text>
-                            </g>
-                            <!-- Sumar / Frente Amplio -->
-                            <g transform="translate(170, 210)">
-                                <circle r="14" fill="#ec4899" stroke="#ffffff" stroke-width="2"/>
-                                <text x="0" y="24" fill="#fbcfe8" font-size="10" font-weight="bold" text-anchor="middle">Sumar / F. Amplio</text>
-                            </g>
-                            <!-- PSOE -->
-                            <g transform="translate(260, 270)">
-                                <circle r="14" fill="#ef4444" stroke="#ffffff" stroke-width="2"/>
-                                <text x="0" y="24" fill="#fca5a5" font-size="10" font-weight="bold" text-anchor="middle">PSOE</text>
-                            </g>
-                            <!-- PP -->
-                            <g transform="translate(410, 340)">
-                                <circle r="14" fill="#3b82f6" stroke="#ffffff" stroke-width="2"/>
-                                <text x="0" y="24" fill="#93c5fd" font-size="10" font-weight="bold" text-anchor="middle">PP</text>
-                            </g>
-                            <!-- Vox -->
-                            <g transform="translate(460, 420)">
-                                <circle r="14" fill="#22c55e" stroke="#ffffff" stroke-width="2"/>
-                                <text x="0" y="24" fill="#86efac" font-size="10" font-weight="bold" text-anchor="middle">Vox</text>
-                            </g>
-                        </g>
-
-                        <!-- User Marker -->
-                        <g id="user-marker" class="transition-all duration-700" transform="translate(300, 300)">
-                            <circle r="18" fill="#6366f1" fill-opacity="0.3" class="animate-ping"/>
-                            <circle r="12" fill="#6366f1" stroke="#ffffff" stroke-width="3"/>
-                            <text x="0" y="-18" fill="#ffffff" font-size="11" font-weight="extrabold" text-anchor="middle" filter="drop-shadow(0px 2px 4px rgba(0,0,0,0.8))">¡TU POSICIÓN!</text>
-                        </g>
-                    </svg>
-                </div>
-                <p class="text-xs text-slate-400 mt-4 text-center">Haz clic en el botón superior para superponer las posiciones oficiales de los partidos según fuentes verificadas.</p>
             </div>
+        </section>
 
-            <!-- Party Affinity Breakdown -->
-            <div class="bg-slate-900/90 border border-slate-800 p-6 sm:p-10 rounded-3xl shadow-xl space-y-6">
-                <h3 class="text-xl font-bold text-white mb-2">Afinidad con los Partidos Políticos</h3>
-                <p class="text-sm text-slate-400 mb-6">Porcentaje de coincidencia basado en la distancia matemática euclidiana entre tu coordenada y la plataforma oficial de cada partido.</p>
-                <div id="affinity-list" class="space-y-4">
-                    <!-- Dynamic Affinity Bars -->
+        <!-- SECTION 7: FAQ ACCORDION -->
+        <section id="faq" class="py-16 bg-slate-900/40 border-b border-slate-900">
+            <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
+                <div class="text-center space-y-2">
+                    <h2 class="text-3xl font-extrabold text-white">Preguntas Frecuentes (FAQ)</h2>
+                    <p class="text-xs text-slate-400">Resolvemos tus dudas metodológicas y sobre la privacidad del test.</p>
+                </div>
+
+                <div class="space-y-4">
+                    <div class="glass-card border border-slate-800 rounded-2xl p-5">
+                        <button onclick="app.toggleFaq(1)" class="w-full text-left font-bold text-sm text-white flex justify-between items-center">
+                            <span>1. ¿Cómo se calcula mi posición en el gráfico de Nolan?</span>
+                            <i id="faq-icon-1" class="fa-solid fa-chevron-down text-indigo-400"></i>
+                        </button>
+                        <div id="faq-ans-1" class="hidden mt-3 text-xs text-slate-300 leading-relaxed pt-2 border-t border-slate-800">
+                            Cada respuesta asigna puntos al Eje Económico (Intervencionismo vs Libre Mercado) y al Eje Social (Autoritarismo vs Libertad Personal). Al finalizar se saca un porcentaje exacto entre 0% y 100% para cada eje.
+                        </div>
+                    </div>
+
+                    <div class="glass-card border border-slate-800 rounded-2xl p-5">
+                        <button onclick="app.toggleFaq(2)" class="w-full text-left font-bold text-sm text-white flex justify-between items-center">
+                            <span>2. ¿Mis respuestas se guardan o se envían a algún servidor?</span>
+                            <i id="faq-icon-2" class="fa-solid fa-chevron-down text-indigo-400"></i>
+                        </button>
+                        <div id="faq-ans-2" class="hidden mt-3 text-xs text-slate-300 leading-relaxed pt-2 border-t border-slate-800">
+                            No. El test funciona 100% en tu propio navegador. No requiere registro, no guardamos IP ni enviamos datos personales a ningún sitio.
+                        </div>
+                    </div>
+
+                    <div class="glass-card border border-slate-800 rounded-2xl p-5">
+                        <button onclick="app.toggleFaq(3)" class="w-full text-left font-bold text-sm text-white flex justify-between items-center">
+                            <span>3. ¿Por qué se ocultan los partidos antes de responder?</span>
+                            <i id="faq-icon-3" class="fa-solid fa-chevron-down text-indigo-400"></i>
+                        </button>
+                        <div id="faq-ans-3" class="hidden mt-3 text-xs text-slate-300 leading-relaxed pt-2 border-t border-slate-800">
+                            Para evitar el sesgo de confirmación. Así respondes con total sinceridad sobre lo que piensas sin intentar acercarte o alejarte de un partido específico.
+                        </div>
+                    </div>
                 </div>
             </div>
-
-            <!-- Transparent Sources & Answers Review -->
-            <div class="bg-slate-900/90 border border-slate-800 p-6 sm:p-10 rounded-3xl shadow-xl space-y-6">
-                <h3 class="text-xl font-bold text-white mb-2">Desglose y Fuentes Verificadas</h3>
-                <p class="text-sm text-slate-400 mb-6">Revisa tus respuestas y compara la postura oficial de los partidos con sus referencias documentales (2021-2026).</p>
-                <div id="review-list" class="space-y-6">
-                    <!-- Dynamic Review items -->
-                </div>
-            </div>
-
-            <!-- Restart CTA -->
-            <div class="text-center pt-6">
-                <button onclick="resetTest()" class="px-8 py-3.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-white font-bold text-sm border border-slate-700 transition-all cursor-pointer">
-                    Realizar Test de Nuevo
-                </button>
-            </div>
-        </div>
+        </section>
 
     </main>
 
-    <!-- Footer / FAQ / About -->
-    <footer id="faq" class="bg-slate-950 border-t border-slate-900 mt-20 text-slate-400 text-sm">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 space-y-16">
-            
-            <!-- FAQs -->
-            <div class="max-w-3xl mx-auto space-y-8">
-                <h3 class="text-2xl font-bold text-white text-center mb-8">Preguntas Frecuentes (FAQ)</h3>
-                
-                <div class="space-y-4">
-                    <div class="p-6 rounded-2xl bg-slate-900/50 border border-slate-800">
-                        <h4 class="font-bold text-white mb-2">¿Cómo se calculan las coordenadas del Diagrama de Nolan?</h4>
-                        <p class="text-slate-400 text-sm leading-relaxed">Las respuestas de la encuesta se agrupan en dos ejes independientes: el Eje X (Libertad Económica) y el Eje Y (Libertad Personal). Cada pregunta pondera positivamente o negativamente hacia la descentralización del Estado o la intervención pública.</p>
-                    </div>
-                    <div class="p-6 rounded-2xl bg-slate-900/50 border border-slate-800">
-                        <h4 class="font-bold text-white mb-2">¿De dónde provienen las posiciones y referencias de los partidos políticos?</h4>
-                        <p class="text-slate-400 text-sm leading-relaxed">Las coordenadas de los partidos (Podemos, Sumar / Frente Amplio, PSOE, PP y Vox) se han extraído exclusivamente de sus programas electorales oficiales, ponencias políticas y votaciones parlamentarias registradas entre 2021 y 2026, contrastadas con medios de comunicación de gran tirada nacional (*El País*, *El Mundo*, *ABC*, *La Vanguardia*).</p>
-                    </div>
-                    <div class="p-6 rounded-2xl bg-slate-900/50 border border-slate-800">
-                        <h4 class="font-bold text-white mb-2">¿Se almacenan mis datos personales o respuestas?</h4>
-                        <p class="text-slate-400 text-sm leading-relaxed">No. Todo el procesamiento de tus respuestas y el cálculo de afinidad se ejecutan de manera local en tu navegador web (100% client-side). No recopilamos ningún tipo de información personal ni identificable.</p>
-                    </div>
-                    <div class="p-6 rounded-2xl bg-slate-900/50 border border-slate-800">
-                        <h4 class="font-bold text-white mb-2">¿Es este test 100% neutral?</h4>
-                        <p class="text-slate-400 text-sm leading-relaxed">Sí. El cuestionario está diseñado metodológicamente para evitar sesgos ideológicos previos, ocultando las posiciones partidistas hasta la finalización de la encuesta.</p>
-                    </div>
+    <!-- FOOTER -->
+    <footer class="border-t border-slate-900 bg-slate-950 py-8 text-slate-500 text-xs">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row items-center justify-between gap-4">
+            <div class="flex items-center space-x-2">
+                <div class="w-6 h-6 rounded-lg bg-indigo-600 flex items-center justify-center text-white text-xs">
+                    <i class="fa-solid fa-compass"></i>
                 </div>
+                <span class="font-bold text-slate-300">Brújula Política España © 2026</span>
             </div>
-
-            <!-- Bottom Legal & Brand -->
-            <div class="border-t border-slate-900 pt-8 flex flex-col sm:flex-row items-center justify-between text-xs text-slate-500">
-                <p>&copy; 2026 Brújula Política España. Metodología abierta e independiente.</p>
-                <p class="mt-4 sm:mt-0">Diseñado con estándares de UX/UI minimalista y alta seguridad cliente.</p>
-            </div>
+            <p class="text-center md:text-left">
+                Plataforma independiente de análisis politológico sin adscripción partidista.
+            </p>
         </div>
     </footer>
 
-    <!-- Application Script -->
+    <!-- JAVASCRIPT LOGIC ENGINE WITH SIMPLIFIED 24 QUESTIONS -->
     <script>
-        // --- DATASET: 24 QUESTIONS ACROSS 4 BLOCKS ---
-        const questionsData = [
-            // Bloque 1: Economía y Fiscalidad
-            {
-                id: 1,
-                block: "Economía y Fiscalidad",
-                text: "¿Consideras que se deben bajar los impuestos a las rentas más altas y a las grandes empresas para estimular la inversión y el crecimiento económico?",
-                econWeight: 1.0, 
-                socialWeight: 0.0,
-                partyStances: {
-                    "Podemos": "Total oposición. Defienden alzas fiscales drásticas a grandes fortunas y beneficios empresariales (Programa 2023).",
-                    "Sumar / F. Amplio": "En desacuerdo. Apuestan por la progresividad fiscal y un impuesto permanente a las grandes fortunas.",
-                    "PSOE": "En desacuerdo moderado. Mantienen impuestos específicos a energéticas y banca, defendiendo presión fiscal progresiva.",
-                    "PP": "De acuerdo. Promueven bajadas generalizadas de IRPF, Sucesiones y Sociedades para atraer capital.",
-                    "Vox": "Totalmente de acuerdo. Defienden la bajada radical de impuestos y la reducción drástica del gasto público."
-                },
-                source: "Programas electorales generales y debates presupuestarios (2023-2025)."
-            },
-            {
-                id: 2,
-                block: "Economía y Fiscalidad",
-                text: "¿Estás a favor de endurecer la regulación pública del mercado del alquiler y fijar topes máximos a los precios de la vivienda?",
-                econWeight: -1.0, 
-                socialWeight: 0.0,
-                partyStances: {
-                    "Podemos": "Totalmente a favor. Impulsan expropiaciones temporales y control estricto de precios.",
-                    "Sumar / F. Amplio": "A favor. Pilar fundamental de su política de vivienda y regulación estatal.",
-                    "PSOE": "A favor. Impulsor principal de la Ley por el Derecho a la Vivienda y zonas tensionadas.",
-                    "PP": "En desacuerdo. Consideran que el tope de precios reduce la oferta y vulnera la propiedad privada.",
-                    "Vox": "Totalmente en desacuerdo. Apuestan por la liberalización del suelo y supresión de trabas urbanísticas."
-                },
-                source: "Ley por el Derecho a la Vivienda (BOE, 2023) y propuestas parlamentarias."
-            },
-            {
-                id: 3,
-                block: "Economía y Fiscalidad",
-                text: "¿Se debería flexibilizar la legislación laboral para abaratar y facilitar el despido en las empresas privadas?",
-                econWeight: 1.0,
-                socialWeight: 0.0,
-                partyStances: {
-                    "Podemos": "Total oposición. Exigen blindar la indemnización por despido y endurecer causas.",
-                    "Sumar / F. Amplio": "En desacuerdo. Defienden la última reforma laboral pactada con sindicatos y freno al despido libre.",
-                    "PSOE": "En desacuerdo. Apuestan por contratos indefinidos y estabilidad laboral reforzada.",
-                    "PP": "De acuerdo. Proponen flexibilizar el mercado laboral para fomentar la contratación.",
-                    "Vox": "De acuerdo. Abogan por reducir indemnizaciones y descentralizar la negociación colectiva."
-                },
-                source: "Debates de Reforma Laboral y programas sectoriales."
-            },
-            {
-                id: 4,
-                block: "Economía y Fiscalidad",
-                text: "¿Apoyas la privatización parcial o total de empresas públicas estratégicas y servicios como la energía o el transporte?",
-                econWeight: 1.0,
-                socialWeight: 0.0,
-                partyStances: {
-                    "Podemos": "Total oposición. Reclaman la nacionalización de sectores estratégicos (energía, banca).",
-                    "Sumar / F. Amplio": "En desacuerdo. Defienden la creación de una empresa pública de energía y blindaje de lo público.",
-                    "PSOE": "En desacuerdo moderado. Mantienen el control público en infraestructuras críticas pero sin grandes nacionalizaciones.",
-                    "PP": "De acuerdo. Favorecen la colaboración público-privada y la reducción del sector público empresarial.",
-                    "Vox": "De acuerdo. Apoyan la liberalización económica y reducción de entes públicos estatales."
-                },
-                source: "Debates energéticos y ponencias económicas de partidos."
-            },
-            {
-                id: 5,
-                block: "Economía y Fiscalidad",
-                text: "¿Estás de acuerdo con otorgar subvenciones públicas directas a sectores en crisis (como la agricultura o la automoción) y ayudas universales?",
-                econWeight: -1.0,
-                socialWeight: 0.0,
-                partyStances: {
-                    "Podemos": "Totalmente a favor. Defienden subsidios universales y protección social ampliada.",
-                    "Sumar / F. Amplio": "A favor. Impulsan la renta básica universal y ayudas directas sociales.",
-                    "PSOE": "A favor. Gestión activa de subvenciones e ingreso mínimo vital.",
-                    "PP": "Neutral / Moderado. Apoyan ayudas condicionados a la actividad y rebajas de costes energéticos, recortando subvenciones ideológicas.",
-                    "Vox": "En desacuerdo. Rechazan subvenciones públicas a sindicatos, patronales y ayudas sociales no finalistas."
-                },
-                source: "Presupuestos Generales del Estado y planes sectoriales."
-            },
-            {
-                id: 6,
-                block: "Economía y Fiscalidad",
-                text: "¿Crees que los autónomos y pequeños empresarios soportan una carga burocrática e impositiva excesiva que frena la economía?",
-                econWeight: 0.8,
-                socialWeight: 0.0,
-                partyStances: {
-                    "Podemos": "Matiz. Defienden progresividad según ingresos reales del autónomo.",
-                    "Sumar / F. Amplio": "Apoyan protección a pequeños autónomos pero con cotizaciones proporcionales.",
-                    "PSOE": "Han implantado el sistema de cotización por ingresos reales con deducciones.",
-                    "PP": "De acuerdo. Promueven tarifa cero inicial y simplificación administrativa drástica.",
-                    "Vox": "Totalmente de acuerdo. Exigen bajada de cuotas y supresión de trabas burocráticas."
-                },
-                source: "Asociaciones de autónomos y reformas del RETA."
-            },
+        const AppData = {
+            parties: [
+                { id: 'podemos', name: 'Podemos', color: '#8b5cf6', x: 10, y: 75, citation: 'Programa Electoral 23J & Ley de Vivienda (BOE)' },
+                { id: 'sumar', name: 'Sumar', color: '#ec4899', x: 18, y: 80, citation: 'Programa Electoral 23J (Un País A Favor)' },
+                { id: 'psoe', name: 'PSOE', color: '#ef4444', x: 40, y: 70, citation: 'Programa Electoral 23J (Adelante)' },
+                { id: 'pp', name: 'Partido Popular', color: '#3b82f6', x: 78, y: 42, citation: 'Programa Electoral PP 23J (Un Gran País)' },
+                { id: 'vox', name: 'Vox', color: '#22c55e', x: 85, y: 18, citation: '100 Medidas para la España Viva' }
+            ],
 
-            // Bloque 2: Servicios Públicos y Estado
-            {
-                id: 7,
-                block: "Servicios Públicos y Estado",
-                text: "¿Se debe blindar por ley la gestión 100% pública de la Sanidad y la Educación, prohibiendo o reduciendo el concierto con la privada?",
-                econWeight: -1.0,
-                socialWeight: 0.0,
-                partyStances: {
-                    "Podemos": "Totalmente a favor. Eliminación absoluta de la sanidad y educación concertada o privada.",
-                    "Sumar / F. Amplio": "A favor. Exclusión de la sanidad privada de los fondos públicos.",
-                    "PSOE": "A favor general de la sanidad pública, manteniendo conciertos allí donde existen redes autonómicas.",
-                    "PP": "En desacuerdo. Defienden la colaboración público-privada para reducir listas de espera.",
-                    "Vox": "En desacuerdo. Apuestan por la libertad de elección mediante cheques escolares y sanitarios."
+            // 24 EXPANDED, SIMPLIFIED QUESTIONS (6 PER BLOCK)
+            questions: [
+                // BLOQUE 1: ECONOMÍA Y FISCALIDAD (0-5)
+                {
+                    id: 1, blockIndex: 0, category: 'Bloque 1: Economía y Fiscalidad', pillar: 'Impuestos a Grandes Fortunas',
+                    text: '¿Se deberían subir los impuestos a las personas muy ricas y grandes empresas para financiar mejores servicios públicos?',
+                    axis: 'econ', inverted: true,
+                    citations: { podemos: 'Impuesto específico a fortunas.', sumar: 'Impuestos progresivos a grandes empresas.', psoe: 'Mantener impuestos a banca y energéticas.', pp: 'Bajar impuestos e incentivar inversión.', vox: 'Bajar drásticamente impuestos.' }
                 },
-                source: "Leyes de Salud autonómicas y programas electorales."
-            },
-            {
-                id: 8,
-                block: "Servicios Públicos y Estado",
-                text: "¿Estás a favor de implantar una Renta Básica Universal incondicional para todos los ciudadanos financiada mediante impuestos?",
-                econWeight: -1.0,
-                socialWeight: 0.0,
-                partyStances: {
-                    "Podemos": "A favor. Consideran la RBU un derecho inalienable.",
-                    "Sumar / F. Amplio": "A favor. Propuesta de herencia universal y prestaciones garantizadas.",
-                    "PSOE": "En desacuerdo con la universalidad incondicional; defienden ayudas condicionadas como el IMV.",
-                    "PP": "En desacuerdo. Consideran que desincentiva la búsqueda activa de empleo.",
-                    "Vox": "Totalmente en desacuerdo. Rechazan subsidios universales sin contraprestación laboral."
+                {
+                    id: 2, blockIndex: 0, category: 'Bloque 1: Economía y Fiscalidad', pillar: 'Precios del Alquiler',
+                    text: '¿Debería el Gobierno poner un tope máximo al precio del alquiler en las zonas donde las viviendas son muy caras?',
+                    axis: 'econ', inverted: true,
+                    citations: { podemos: 'Tope estricto de alquileres.', sumar: 'Fijar límites vinculados a salarios.', psoe: 'Topes mediante Ley de Vivienda.', pp: 'Incentivar más oferta sin topes.', vox: 'Liberar suelo y cero regulación.' }
                 },
-                source: "Propuestas parlamentarias sobre prestaciones sociales."
-            },
-            {
-                id: 9,
-                block: "Servicios Públicos y Estado",
-                text: "¿Se debería recortar el gasto político superfluo (número de ministerios, asesores, subvenciones a partidos y sindicatos)?",
-                econWeight: 0.5,
-                socialWeight: 0.5,
-                partyStances: {
-                    "Podemos": "Matiz. Defienden estructuras públicas fuertes para garantizar derechos.",
-                    "Sumar / F. Amplio": "Defienden administraciones eficientes con peso social.",
-                    "PSOE": "Apuestan por la racionalización administrativa.",
-                    "PP": "De acuerdo. Prometen reducción de altos cargos y ministerios.",
-                    "Vox": "Totalmente de acuerdo. Eje central de su discurso contra el gasto político."
+                {
+                    id: 3, blockIndex: 0, category: 'Bloque 1: Economía y Fiscalidad', pillar: 'Jornada Laboral',
+                    text: '¿Se debería reducir la jornada laboral por ley (por ejemplo a 37,5 o 35 horas semanales) manteniendo el mismo sueldo?',
+                    axis: 'econ', inverted: true,
+                    citations: { podemos: 'Reducción a 35h semanales.', sumar: 'Reducción por ley a 37.5h e impulso a 32h.', psoe: 'Acuerdo social gradual.', pp: 'Dejarlo a negociación de cada empresa.', vox: 'No intervenir en contratos privados.' }
                 },
-                source: "Debates de investidura y presupuestos."
-            },
-            {
-                id: 10,
-                block: "Servicios Públicos y Estado",
-                text: "¿Consideras prioritario aumentar la inversión pública en I+D+i y transición ecológica aunque suponga incrementar temporalmente el déficit?",
-                econWeight: -0.8,
-                socialWeight: 0.2,
-                partyStances: {
-                    "Podemos": "Totalmente a favor. Pacto verde y fuerte intervención pública.",
-                    "Sumar / F. Amplio": "Totalmente a favor. Eje central de su modelo productivo.",
-                    "PSOE": "A favor. Fondos europeos Next Generation orientados a digitalización y verde.",
-                    "PP": "Moderado. Apoyan I+D pero con rigor fiscal y control del déficit.",
-                    "Vox": "En desacuerdo con políticas climáticas estrictas (Agenda 2030) por su coste económico."
+                {
+                    id: 4, blockIndex: 0, category: 'Bloque 1: Economía y Fiscalidad', pillar: 'Despido y Trabajo',
+                    text: '¿Debería ser más barato y sencillo para las empresas despedir o contratar trabajadores según sus necesidades?',
+                    axis: 'econ', inverted: false,
+                    citations: { podemos: 'Encarecer mucho el despido.', sumar: 'Mayor protección al trabajador.', psoe: 'Mantener actual Reforma Laboral.', pp: 'Dar más flexibilidad a las empresas.', vox: 'Flexibilidad total laboral.' }
                 },
-                source: "Plan de Recuperación, Transformación y Resiliencia (2021-2026)."
-            },
-            {
-                id: 11,
-                block: "Servicios Públicos y Estado",
-                text: "¿Se deben endurecer los requisitos y controles de acceso a las prestaciones sociales para evitar el fraude o el efecto llamada?",
-                econWeight: 0.5,
-                socialWeight: -0.5,
-                partyStances: {
-                    "Podemos": "En desacuerdo. Abogan por simplificar y ampliar el acceso sin trabas.",
-                    "Sumar / F. Amplio": "En desacuerdo. Derechos sociales amplios para residentes.",
-                    "PSOE": "Equilibrio entre control administrativo y protección social.",
-                    "PP": "De acuerdo. Reclaman mayor inspección y condicionalidad.",
-                    "Vox": "Totalmente de acuerdo. Exigen endurecimiento estricto y preferencia nacional."
+                {
+                    id: 5, blockIndex: 0, category: 'Bloque 1: Economía y Fiscalidad', pillar: 'Impuesto de Sucesiones',
+                    text: '¿Se debería eliminar el impuesto que se paga al heredar viviendas o dinero de los padres?',
+                    axis: 'econ', inverted: false,
+                    citations: { podemos: 'Mantenerlo para que paguen las grandes herencias.', sumar: 'Gravar grandes herencias.', psoe: 'Gravar herencias elevadas.', pp: 'Eliminarlo o bonificarlo al 99%.', vox: 'Eliminación total del impuesto.' }
                 },
-                source: "Iniciativas parlamentarias sobre control de ayudas."
-            },
-            {
-                id: 12,
-                block: "Servicios Públicos y Estado",
-                text: "¿Apoyas la digitalización acelerada de la administración pública para eliminar la presencialidad obligatoria y trámites lentos?",
-                econWeight: 0.2,
-                socialWeight: 0.5,
-                partyStances: {
-                    "Podemos": "A favor con cautelas para proteger a colectivos vulnerables sin acceso digital.",
-                    "Sumar / F. Amplio": "A favor garantizando asistencia humana complementaria.",
-                    "PSOE": "A favor. Plan España Digital en marcha.",
-                    "PP": "A favor. Modernización y simplificación digital.",
-                    "Vox": "A favor. Reducción de burocracia administrativa."
+                {
+                    id: 6, blockIndex: 0, category: 'Bloque 1: Economía y Fiscalidad', pillar: 'Salario Mínimo',
+                    text: '¿El Gobierno debe seguir subiendo el Salario Mínimo obligatorio todos los años por decreto?',
+                    axis: 'econ', inverted: true,
+                    citations: { podemos: 'Subir SMI al 60% del sueldo medio.', sumar: 'Subida obligatoria constante.', psoe: 'Subida acordada con patronal.', pp: 'Subir solo si sube la productividad.', vox: 'Reducir cotizaciones sociales.' }
                 },
-                source: "Estrategia Digital Nacional."
-            },
 
-            // Bloque 3: Derechos Sociales y Libertades Individuales
-            {
-                id: 13,
-                block: "Derechos Sociales y Libertades",
-                text: "¿Estás a favor de mantener y ampliar las leyes de protección integral contra la violencia de género y los delitos de odio por LGTBIQfobia?",
-                econWeight: 0.0,
-                socialWeight: 1.0, 
-                partyStances: {
-                    "Podemos": "Totalmente a favor. Impulsoras de leyes de igualdad estricta.",
-                    "Sumar / F. Amplio": "Totalmente a favor. Defensa activa de los derechos LGTBIQ+ y feministas.",
-                    "PSOE": "A favor. Promotores históricos y actuales de la legislación en esta materia.",
-                    "PP": "Matiz / Moderado. Apoyan protección contra la violencia intrafamiliar y derechos civiles, con discrepancias terminológicas.",
-                    "Vox": "Totalmente en desacuerdo. Exigen derogar la Ley de Violencia de Género (sustituyéndola por intrafamiliar) y leyes LGTBIQ+."
+                // BLOQUE 2: SERVICIOS PÚBLICOS Y ESTADO DEL BIENESTAR (6-11)
+                {
+                    id: 7, blockIndex: 1, category: 'Bloque 2: Servicios Públicos', pillar: 'Educación Concertada y Privada',
+                    text: '¿El Estado debería financiar con dinero público los colegios concertados o dar cheques a las familias para ir a colegios privados?',
+                    axis: 'econ', inverted: false,
+                    citations: { podemos: 'Solo financiar educación 100% pública.', sumar: 'Prioridad total a la escuela pública.', psoe: 'Mantener conciertos existentes.', pp: 'Apoyo firme a la educación concertada.', vox: 'Cheque escolar universal para elegir centro.' }
                 },
-                source: "Leyes orgánicas de igualdad y sentencias del Tribunal Constitucional."
-            },
-            {
-                id: 14,
-                block: "Derechos Sociales y Libertades",
-                text: "¿Apoyas el derecho garantizado por la sanidad pública a la interrupción voluntaria del embarazo (aborto) y a la eutanasia?",
-                econWeight: 0.0,
-                socialWeight: 1.0,
-                partyStances: {
-                    "Podemos": "Totalmente a favor.",
-                    "Sumar / F. Amplio": "Totalmente a favor.",
-                    "PSOE": "A favor. Defensores de la Ley de eutanasia y plazos del aborto.",
-                    "PP": "Posición moderada/recurrida. Aceptan el marco legal actual validado por el TC, con sectores críticos contrarios al aborto libre.",
-                    "Vox": "Totalmente en desacuerdo. Contrarios al aborto y a la ley de eutanasia por principios provida."
+                {
+                    id: 8, blockIndex: 1, category: 'Bloque 2: Servicios Públicos', pillar: 'Sanidad Privada y Copago',
+                    text: '¿Se debería permitir que empresas privadas gestionen hospitales públicos si aseguran hacerlo de forma eficiente?',
+                    axis: 'econ', inverted: false,
+                    citations: { podemos: 'Prohibir la gestión privada en sanidad.', sumar: 'Gestión 100% pública directa.', psoe: 'Modelo mixto bajo control estatal.', pp: 'Colaboración público-privada en sanidad.', vox: 'Fomentar seguros privados con deducciones.' }
                 },
-                source: "Ley Orgánica de Eutanasia (BOE) y recursos ante el Tribunal Constitucional."
-            },
-            {
-                id: 15,
-                block: "Derechos Sociales y Libertades",
-                text: "¿Se debería endurecer la política de seguridad ciudadana (Ley Mordaza) otorgando mayor respaldo legal y autoridad a las fuerzas policiales?",
-                econWeight: 0.0,
-                socialWeight: -1.0, 
-                partyStances: {
-                    "Podemos": "Total oposición. Exigen derogación íntegra de la Ley Orgánica de Protección de la Seguridad Ciudadana.",
-                    "Sumar / F. Amplio": "En desacuerdo. Promueven relajar sanciones y proteger derecho a manifestación.",
-                    "PSOE": "Posición intermedia. Intentaron reformarla para flexibilizar sanciones sin éxito por desacuerdo con socios.",
-                    "PP": "De acuerdo. Defienden reforzar la autoridad policial y mantener sanciones disuasorias.",
-                    "Vox": "Totalmente de acuerdo. Máximo respaldo a las fuerzas de seguridad y endurecimiento penal."
+                {
+                    id: 9, blockIndex: 1, category: 'Bloque 2: Servicios Públicos', pillar: 'Empresas Públicas de Energía',
+                    text: '¿El Estado debería crear una empresa pública de electricidad para competir con las eléctricas privadas?',
+                    axis: 'econ', inverted: true,
+                    citations: { podemos: 'Creación inmediata de una eléctrica pública.', sumar: 'Intervenir y participar en energéticas.', psoe: 'Fomentar renovables públicas.', pp: 'Libre mercado de empresas eléctricas.', vox: 'Eliminar impuestos a la energía sin crear empresas públicas.' }
                 },
-                source: "Debates parlamentarios sobre la reforma de la Ley de Seguridad Ciudadana."
-            },
-            {
-                id: 16,
-                block: "Derechos Sociales y Libertades",
-                text: "¿Estás a favor de la legalización y regulación del cannabis y otras sustancias recreativas para adultos?",
-                econWeight: 0.2,
-                socialWeight: 1.0,
-                partyStances: {
-                    "Podemos": "A favor de la regulación integral.",
-                    "Sumar / F. Amplio": "A favor de la regulación controlada y uso medicinal/recreativo.",
-                    "PSOE": "En desacuerdo con la legalización general, abiertos al uso terapéutico regulado.",
-                    "PP": "En desacuerdo. Consideran que fomenta el consumo y problemas de salud pública.",
-                    "Vox": "Totalmente en desacuerdo. Apuestan por el endurecimiento contra el narcotráfico y adicciones."
+                {
+                    id: 10, blockIndex: 1, category: 'Bloque 2: Servicios Públicos', pillar: 'Pensiones Privadas',
+                    text: '¿Debería fomentarse que la gente contrate planes de pensiones privados para el futuro en lugar de depender solo del Estado?',
+                    axis: 'econ', inverted: false,
+                    citations: { podemos: 'Defensa exclusiva del sistema público.', sumar: 'Pensiones públicas garantizadas por ley.', psoe: 'Reforzar el sistema público de pensiones.', pp: 'Fomentar ahorro y planes privados.', vox: 'Incentivos fiscales a planes de pensiones privados.' }
                 },
-                source: "Proposiciones no de ley en el Congreso."
-            },
-            {
-                id: 17,
-                block: "Derechos Sociales y Libertades",
-                text: "¿Consideras que la educación afectivo-sexual y en diversidad debe ser obligatoria en los colegios públicos y concertados?",
-                econWeight: 0.0,
-                socialWeight: 0.8,
-                partyStances: {
-                    "Podemos": "Totalmente a favor.",
-                    "Sumar / F. Amplio": "Totalmente a favor.",
-                    "PSOE": "A favor dentro de los currículos educativos estatales.",
-                    "PP": "En desacuerdo con imposiciones ideológicas; defienden el 'pin parental' o autorización familiar previa.",
-                    "Vox": "Totalmente en desacuerdo. Exigen veto parental absoluto a cualquier taller externo."
+                {
+                    id: 11, blockIndex: 1, category: 'Bloque 2: Servicios Públicos', pillar: 'Subvenciones a Sindicatos y Patronal',
+                    text: '¿Se deberían quitar completamente las subvenciones públicas a sindicatos, partidos políticos y patronales empresariales?',
+                    axis: 'econ', inverted: false,
+                    citations: { podemos: 'Financiar la labor social de los sindicatos.', sumar: 'Apoyo público al diálogo social.', psoe: 'Mantener financiación institucional.', pp: 'Revisar y auditar subvenciones.', vox: 'Eliminación total e inmediata de subvenciones.' }
                 },
-                source: "Leyes educativas (LOMLOE) y debates autonómicos."
-            },
-            {
-                id: 18,
-                block: "Derechos Sociales y Libertades",
-                text: "¿Se deben aplicar penas de prisión permanente revisable y endurecer los códigos penales para delitos graves (violaciones, homicidios)?",
-                econWeight: 0.0,
-                socialWeight: -0.8,
-                partyStances: {
-                    "Podemos": "En desacuerdo. Abogan por la reinserción y rechazan el endurecimiento punitivo.",
-                    "Sumar / F. Amplio": "En desacuerdo con la prisión permanente revisable.",
-                    "PSOE": "En desacuerdo con la prisión permanente revisable por considerarla inconstitucional en su fórmula actual.",
-                    "PP": "De acuerdo. Defienden mantener y ampliar la prisión permanente revisable.",
-                    "Vox": "Totalmente de acuerdo. Exigen cadena perpetua real para delitos graves."
+                {
+                    id: 12, blockIndex: 1, category: 'Bloque 2: Servicios Públicos', pillar: 'Ayuda Básica Incondicional',
+                    text: '¿El Estado debería garantizar un subsidio o ingreso mínimo a cualquier persona en situación de vulnerabilidad?',
+                    axis: 'econ', inverted: true,
+                    citations: { podemos: 'Ingreso Ciudadano Universal.', sumar: 'Renta básica universal y juvenil.', psoe: 'Ingreso Mínimo Vital garantizado.', pp: 'Ayudas vinculadas al empleo activo.', vox: 'Control estricto de ayudas para evitar fraudes.' }
                 },
-                source: "Recursos y ponencias sobre el Código Penal."
-            },
 
-            // Bloque 4: Modelo de Estado y Política Territorial
-            {
-                id: 19,
-                block: "Modelo de Estado y Política Territorial",
-                text: "¿Apoyas la concesión de amnistías o indultos a políticos procesados por delitos de sedición o malversación en procesos secesionistas?",
-                econWeight: 0.0,
-                socialWeight: 0.6,
-                partyStances: {
-                    "Podemos": "A favor. Consideran que fomenta la desjudicialización y la convivencia.",
-                    "Sumar / F. Amplio": "A favor. Impulsores y firmantes de acuerdos de amnistía.",
-                    "PSOE": "A favor. Defienden la medida de gracia como instrumento de concordia en Cataluña.",
-                    "PP": "Totalmente en desacuerdo. Consideran que vulnera la igualdad ante la ley y destruye el Estado de derecho.",
-                    "Vox": "Totalmente en desacuerdo. Consideran la amnistía un acto de traición y golpe institucional."
+                // BLOQUE 3: DERECHOS SOCIALES Y LIBERTADES PERSONALES (12-17)
+                {
+                    id: 13, blockIndex: 2, category: 'Bloque 3: Derechos y Libertades', pillar: 'Derechos Trans y Autodeterminación',
+                    text: '¿Cualquier persona debería poder cambiar legalmente su nombre y sexo en el DNI sin necesidad de informes médicos?',
+                    axis: 'social', inverted: false,
+                    citations: { podemos: 'Defensa total de la Ley Trans.', sumar: 'Despatologización y derechos trans.', psoe: 'Apoyo a la autodeterminación aprobada.', pp: 'Modificar los aspectos médicos de la ley.', vox: 'Derogación inmediata de la Ley Trans.' }
                 },
-                source: "Ley de Amnistía (BOE, 2024) y recursos constitucionales."
-            },
-            {
-                id: 20,
-                block: "Modelo de Estado y Política Territorial",
-                text: "¿Se debería recentralizar en el Estado competencias clave como Sanidad, Educación y Justicia para garantizar la igualdad entre españoles?",
-                econWeight: 0.0,
-                socialWeight: -0.9, 
-                partyStances: {
-                    "Podemos": "En desacuerdo. Defienden el modelo autonómico y plurinacional.",
-                    "Sumar / F. Amplio": "En desacuerdo. Apuestan por profundizar el estado federal.",
-                    "PSOE": "En desacuerdo con la recentralización; defienden el pacto autonómico vigente.",
-                    "PP": "Matiz / Moderado. Defienden la alta inspección y coordinación estatal sin eliminar autonomías.",
-                    "Vox": "Totalmente de acuerdo. Exigen la devolución inmediata de competencias al Estado central y fin de autonomías."
+                {
+                    id: 14, blockIndex: 2, category: 'Bloque 3: Derechos y Libertades', pillar: 'Eutanasia',
+                    text: '¿Una persona con una enfermedad incurable o dolor insoportable debería tener derecho a solicitar la eutanasia médica?',
+                    axis: 'social', inverted: false,
+                    citations: { podemos: 'Derecho fundamental a la eutanasia.', sumar: 'Garantizar el derecho a la eutanasia.', psoe: 'Aprobación de la Ley de Eutanasia.', pp: 'Potenciar cuidados paliativos.', vox: 'Derogación de la Ley de Eutanasia.' }
                 },
-                source: "Programas electorales autonómicos y nacionales."
-            },
-            {
-                id: 21,
-                block: "Modelo de Estado y Política Territorial",
-                text: "¿Estás a favor de prohibir por ley los partidos y organizaciones que promuevan la independencia de regiones españolas?",
-                econWeight: 0.0,
-                socialWeight: -1.0,
-                partyStances: {
-                    "Podemos": "Total oposición. Defienden el derecho a decidir y la libertad de expresión política.",
-                    "Sumar / F. Amplio": "En desacuerdo. Apuestan por cauces democráticos y referendos pactados.",
-                    "PSOE": "En desacuerdo. Consideran anticonstitucional la ilegalización de ideas políticas pacíficas.",
-                    "PP": "En desacuerdo con ilegalizar por simple ideología, pero partidarios de tipificar delitos como el referéndum ilegal.",
-                    "Vox": "Totalmente de acuerdo. Exigen la ilegalización de partidos separatistas."
+                {
+                    id: 15, blockIndex: 2, category: 'Bloque 3: Derechos y Libertades', pillar: 'Aborto en Sanidad Pública',
+                    text: '¿El aborto libre en las primeras semanas de embarazo debe estar totalmente garantizado en la sanidad pública?',
+                    axis: 'social', inverted: false,
+                    citations: { podemos: 'Garantía 100% pública sin traba alguna.', sumar: 'Derecho garantizado en hospitales públicos.', psoe: 'Derecho garantizado por la ley actual.', pp: 'Regulación con mayor consenso.', vox: 'Protección de la vida desde la concepción.' }
                 },
-                source: "Proposiciones de ley de partidos políticos en el Congreso."
-            },
-            {
-                id: 22,
-                block: "Modelo de Estado y Política Territorial",
-                text: "¿Se debe mantener la monarquía parlamentaria como forma de Jefatura del Estado en España frente a la opción de una república?",
-                econWeight: 0.0,
-                socialWeight: -0.5,
-                partyStances: {
-                    "Podemos": "Total oposición. Reclamamos un proceso constituyente republicano.",
-                    "Sumar / F. Amplio": "Críticos con la Corona; abogan por un horizonte republicano.",
-                    "PSOE": "A favor de la monarquía constitucional y la figura del Rey.",
-                    "PP": "Totalmente a favor. Defienden la Corona como símbolo de unidad y estabilidad.",
-                    "Vox": "Totalmente a favor. Máxima defensa de la monarquía y el Jefe del Estado."
+                {
+                    id: 16, blockIndex: 2, category: 'Bloque 3: Derechos y Libertades', pillar: 'Laicidad del Estado',
+                    text: '¿Se debería quitar la casilla de la Iglesia en la declaración de la renta y eliminar la religión en escuelas públicas?',
+                    axis: 'social', inverted: false,
+                    citations: { podemos: 'Estado 100% laico y sin casillas religiosas.', sumar: 'Avanzar en la laicidad del Estado.', psoe: 'Respetar aconfesionalidad del Estado.', pp: 'Mantener acuerdos con la Iglesia.', vox: 'Defensa de las raíces cristianas de España.' }
                 },
-                source: "Debates institucionales y posicionamientos oficiales."
-            },
-            {
-                id: 23,
-                block: "Modelo de Estado y Política Territorial",
-                text: "¿Consideras necesaria una política de fronteras estrictas con devoluciones en caliente y expulsión inmediata de inmigrantes en situación irregular?",
-                econWeight: 0.2,
-                socialWeight: -0.8,
-                partyStances: {
-                    "Podemos": "Total oposición. Defienden vías legales y seguras y regularización general.",
-                    "Sumar / F. Amplio": "En desacuerdo con expulsiones sumarias; abogan por derechos humanos y asilo.",
-                    "PSOE": "Equilibrio entre control fronterizo policial y acuerdos de cooperación con países de origen.",
-                    "PP": "De acuerdo. Defienden control riguroso de fronteras y refuerzo de Cuerpos de Seguridad.",
-                    "Vox": "Totalmente de acuerdo. Eje central: deportación masiva de irregulares y cierre de fronteras."
+                {
+                    id: 17, blockIndex: 2, category: 'Bloque 3: Derechos y Libertades', pillar: 'Regularización de Migrantes',
+                    text: '¿Se debe dar papeles y regularizar la situación de los migrantes sin papeles que ya viven y trabajan en España?',
+                    axis: 'social', inverted: false,
+                    citations: { podemos: 'Regularización extraordinaria de migrantes.', sumar: 'Vías legales y regularización de trabajadores.', psoe: 'Pacto migratorio y regularizaciones pactadas.', pp: 'Vincular inmigración a contratos de trabajo.', vox: 'Deportación inmediata de irregulares.' }
                 },
-                source: "Pacto Europeo de Migración y Asilo y debates fronterizos."
-            },
-            {
-                id: 24,
-                block: "Modelo de Estado y Política Territorial",
-                text: "¿Apoyas la financiación autonómica singular o bilateral para determinadas comunidades autónomas (como Cataluña o País Vasco)?",
-                econWeight: -0.5,
-                socialWeight: -0.2,
-                partyStances: {
-                    "Podemos": "A favor de modelos federales asimétricos dialogados.",
-                    "Sumar / F. Amplio": "A favor de la corresponsabilidad fiscal y bilateralidad pactada.",
-                    "PSOE": "A favor de acuerdos singulares dentro del marco de negociación multilateral.",
-                    "PP": "Totalmente en desacuerdo. Exigen caja única y multilateralidad estricta para evitar privilegios.",
-                    "Vox": "Totalmente en desacuerdo. Supresión de regímenes forales especiales y caja única."
+                {
+                    id: 18, blockIndex: 2, category: 'Bloque 3: Derechos y Libertades', pillar: 'Memoria Histórica',
+                    text: '¿El Estado debe invertir dinero público en buscar y retirar símbolos o fosas del franquismo?',
+                    axis: 'social', inverted: false,
+                    citations: { podemos: 'Ley de Memoria y exhumaciones públicas.', sumar: 'Verdad, justicia y reparación pública.', psoe: 'Aplicar la Ley de Memoria Democrática.', pp: 'Derogar la ley actual y fomentar concordia.', vox: 'Eliminar leyes de memoria histórica.' }
                 },
-                source: "Consejos de Política Fiscal y Financiera (2023-2026)."
-            }
-        ];
 
-        // --- PARTY BENCHMARK COORDINATES (In Nolan Classic SVG Space: 0 to 600) ---
-        const partiesData = {
-            "Podemos": { x: 140, y: 240, color: "#a855f7" },
-            "Sumar / F. Amplio": { x: 170, y: 210, color: "#ec4899" },
-            "PSOE": { x: 260, y: 270, color: "#ef4444" },
-            "PP": { x: 410, y: 340, color: "#3b82f6" },
-            "Vox": { x: 460, y: 420, color: "#22c55e" }
+                // BLOQUE 4: MODELO DE ESTADO Y COHESIÓN TERRITORIAL (18-23)
+                {
+                    id: 19, blockIndex: 3, category: 'Bloque 4: Modelo de Estado', pillar: 'Centralización de Competencias',
+                    text: '¿El Gobierno central debería recuperar competencias como Sanidad o Educación que ahora tienen las Comunidades Autónomas?',
+                    axis: 'social', inverted: true,
+                    citations: { podemos: 'No, defender el Estado plurinacional.', sumar: 'Más autonomía y federalismo.', psoe: 'Mantener el Estado autonómico actual.', pp: 'Respetar las autonomías sin centralizar.', vox: 'Sí, recentralizar Sanidad y Educación.' }
+                },
+                {
+                    id: 20, blockIndex: 3, category: 'Bloque 4: Modelo de Estado', pillar: 'Lenguas Cooficiales',
+                    text: '¿Se debería poder usar el catalán, euskera y gallego con total normalidad en el Congreso y trámites del Estado?',
+                    axis: 'social', inverted: false,
+                    citations: { podemos: 'Plena cooficialidad en todo el Estado.', sumar: 'Uso normalizado de lenguas oficiales.', psoe: 'Permitir su uso en el Congreso.', pp: 'Priorizar el castellano como idioma común.', vox: 'Uso exclusivo del castellano en el Estado.' }
+                },
+                {
+                    id: 21, blockIndex: 3, category: 'Bloque 4: Modelo de Estado', pillar: 'Monarquía o República',
+                    text: '¿Se debería celebrar un referéndum para que los ciudadanos decidan entre Monarquía o República?',
+                    axis: 'social', inverted: false,
+                    citations: { podemos: 'A favor de la República y referéndum.', sumar: 'Proceso democrático hacia la República.', psoe: 'Defensa de la Monarquía Parlamentaria.', pp: 'Defensa firme del Rey y la Constitución.', vox: 'Lealtad total a la Corona de España.' }
+                },
+                {
+                    id: 22, blockIndex: 3, category: 'Bloque 4: Modelo de Estado', pillar: 'Elección de Jueces (CGPJ)',
+                    text: '¿Los propios jueces deberían elegir directamente a los vocales del Poder Judicial sin que intervengan los partidos del Congreso?',
+                    axis: 'econ', inverted: false,
+                    citations: { podemos: 'No, la soberanía popular debe elegir en el Congreso.', sumar: 'Evitar el bloqueo mediante el Parlamento.', psoe: 'Modelo pactado entre Congreso y jueces.', pp: 'Elección directa de los 12 vocales por los jueces.', vox: 'Elección directa por jueces sin políticos.' }
+                },
+                {
+                    id: 23, blockIndex: 3, category: 'Bloque 4: Modelo de Estado', pillar: 'Manifestaciones y Seguridad',
+                    text: '¿Se debería reformar la Ley de Seguridad Ciudadana (Ley Mordaza) para reducir las multas policiales en protestas?',
+                    axis: 'social', inverted: false,
+                    citations: { podemos: 'Derogación total de sanciones en marchas.', sumar: 'Reemplazar por una ley garantista.', psoe: 'Reforma parcial de artículos conflictivos.', pp: 'Mantener la ley para proteger a la policía.', vox: 'Endurecer penas por desórdenes públicos.' }
+                },
+                {
+                    id: 24, blockIndex: 3, category: 'Bloque 4: Modelo de Estado', pillar: 'Control de Fronteras',
+                    text: '¿Deberían reforzarse las vallas y controles fronterizos para impedir la entrada ilegal de personas?',
+                    axis: 'social', inverted: true,
+                    citations: { podemos: 'Cierre de los CIEs y fronteras más humanas.', sumar: 'Respeto absoluto a los derechos humanos en frontera.', psoe: 'Control de fronteras y cooperación europea.', pp: 'Reforzar las fronteras e incrementar medios.', vox: 'Muros, presencia militar y máxima firmeza.' }
+                }
+            ]
         };
 
-        // --- APP STATE ---
-        let currentQuestionIndex = 0;
-        let userAnswers = []; 
-
-        // --- DOM ELEMENTS ---
-        const viewIntro = document.getElementById('view-intro');
-        const viewSurvey = document.getElementById('view-survey');
-        const viewResults = document.getElementById('view-results');
-        
-        const questionText = document.getElementById('question-text');
-        const categoryBadge = document.getElementById('category-badge');
-        const progressText = document.getElementById('progress-text');
-        const progressBar = document.getElementById('progress-bar');
-        const prevBtn = document.getElementById('prev-btn');
-        const blockNameFooter = document.getElementById('block-name-footer');
-
-        // --- CONTROLLER FUNCTIONS ---
-        function startTest() {
-            viewIntro.classList.add('hidden');
-            viewResults.classList.add('hidden');
-            viewSurvey.classList.remove('hidden');
-            currentQuestionIndex = 0;
-            userAnswers = new Array(questionsData.length).fill(null);
-            loadQuestion();
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        }
-
-        function loadQuestion() {
-            const q = questionsData[currentQuestionIndex];
-            categoryBadge.textContent = q.block;
-            blockNameFooter.textContent = q.block;
-            progressText.textContent = `Pregunta ${currentQuestionIndex + 1} de ${questionsData.length}`;
-            
-            const progressPercent = ((currentQuestionIndex + 1) / questionsData.length) * 100;
-            progressBar.style.width = `${progressPercent}%`;
-            
-            questionText.textContent = q.text;
-            prevBtn.disabled = currentQuestionIndex === 0;
-        }
-
-        function answerQuestion(score) {
-            const normalizedScore = score - 3; 
-            userAnswers[currentQuestionIndex] = normalizedScore;
-
-            if (currentQuestionIndex < questionsData.length - 1) {
-                currentQuestionIndex++;
-                loadQuestion();
-            } else {
-                calculateResults();
-            }
-        }
-
-        function prevQuestion() {
-            if (currentQuestionIndex > 0) {
-                currentQuestionIndex--;
-                loadQuestion();
-            }
-        }
-
-        function calculateResults() {
-            viewSurvey.classList.add('hidden');
-            viewResults.classList.remove('hidden');
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-
-            let totalEcon = 0;
-            let totalSocial = 0;
-
-            questionsData.forEach((q, idx) => {
-                const ans = userAnswers[idx]; 
-                totalEcon += ans * q.econWeight;
-                totalSocial += ans * q.socialWeight;
-            });
-
-            const maxScore = 36;
-            
-            let svgX = 300 + (totalEcon / maxScore) * 180;
-            svgX = Math.max(80, Math.min(520, svgX));
-
-            let svgY = 300 - (totalSocial / maxScore) * 180;
-            svgY = Math.max(80, Math.min(520, svgY));
-
-            const userMarker = document.getElementById('user-marker');
-            userMarker.setAttribute('transform', `translate(${svgX}, ${svgY})`);
-
-            const affinities = [];
-            for (const [partyName, coords] of Object.entries(partiesData)) {
-                const dist = Math.sqrt(Math.pow(svgX - coords.x, 2) + Math.pow(svgY - coords.y, 2));
-                let affinityPercent = Math.max(0, Math.round(100 - (dist / 450) * 100));
-                affinityPercent = Math.min(99, Math.max(12, affinityPercent));
-                affinities.push({ name: partyName, affinity: affinityPercent, color: coords.color });
+        class Application {
+            constructor() {
+                this.currentIndex = 0;
+                this.userAnswers = new Array(AppData.questions.length).fill(null);
+                this.userScore = { x: 50, y: 50 };
+                this.showPartiesChart = false;
             }
 
-            affinities.sort((a, b) => b.affinity - a.affinity);
+            init() {
+                this.renderQuizStep();
+            }
 
-            const affinityList = document.getElementById('affinity-list');
-            affinityList.innerHTML = '';
-            affinities.forEach(item => {
-                affinityList.innerHTML += `
-                    <div class="space-y-2">
-                        <div class="flex justify-between items-center text-sm font-bold">
-                            <span class="flex items-center space-x-2">
-                                <span class="w-3.5 h-3.5 rounded-full" style="background-color: ${item.color}"></span>
-                                <span class="text-white">${item.name}</span>
-                            </span>
-                            <span class="text-indigo-400">${item.affinity}% Afinidad</span>
-                        </div>
-                        <div class="w-full bg-slate-800 h-3 rounded-full overflow-hidden p-0.5 border border-slate-700">
-                            <div class="h-full rounded-full transition-all duration-1000" style="width: ${item.affinity}%; background-color: ${item.color}"></div>
-                        </div>
-                    </div>
-                `;
-            });
+            scrollToSurvey() {
+                document.getElementById('encuesta-section').scrollIntoView({ behavior: 'smooth' });
+            }
 
-            const reviewList = document.getElementById('review-list');
-            reviewList.innerHTML = '';
-            questionsData.forEach((q, idx) => {
-                const userAnsScore = userAnswers[idx];
-                const textLabels = {
-                    "-2": "Totalmente en desacuerdo",
-                    "-1": "En desacuerdo",
-                    "0": "Neutral",
-                    "1": "De acuerdo",
-                    "2": "Totalmente de acuerdo"
-                };
-                const userChoiceText = textLabels[userAnsScore] || "Neutral";
+            renderQuizStep() {
+                const q = AppData.questions[this.currentIndex];
+                const total = AppData.questions.length;
 
-                let stancesHtml = '';
-                for (const [pName, stanceText] of Object.entries(q.partyStances)) {
-                    stancesHtml += `<div class="text-xs text-slate-300 py-1 border-b border-slate-800/50 last:border-0"><strong class="text-indigo-300">${pName}:</strong> ${stanceText}</div>`;
+                document.getElementById('category-badge').textContent = q.category;
+                document.getElementById('quiz-step-indicator').textContent = `Pregunta ${this.currentIndex + 1} de ${total}`;
+                document.getElementById('question-pillar').textContent = `Tema: ${q.pillar}`;
+                document.getElementById('question-text').textContent = q.text;
+
+                const currentBlock = q.blockIndex;
+                for (let i = 0; i < 4; i++) {
+                    const tabElem = document.getElementById(`tab-block-${i}`);
+                    if (i < currentBlock) {
+                        tabElem.className = 'h-1.5 rounded-full bg-indigo-500 transition-all';
+                    } else if (i === currentBlock) {
+                        tabElem.className = 'h-1.5 rounded-full bg-gradient-to-r from-indigo-500 to-purple-500 transition-all';
+                    } else {
+                        tabElem.className = 'h-1.5 rounded-full bg-slate-800 transition-all';
+                    }
                 }
 
-                reviewList.innerHTML += `
-                    <div class="p-5 rounded-2xl bg-slate-950/60 border border-slate-800 space-y-3">
-                        <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2">
-                            <span class="px-2.5 py-0.5 rounded-md bg-indigo-500/10 text-indigo-400 text-xs font-bold">${q.block}</span>
-                            <span class="text-xs text-slate-400 font-semibold">Tu respuesta: <span class="text-white font-bold">${userChoiceText}</span></span>
-                        </div>
-                        <h4 class="text-sm font-bold text-white">${q.text}</h4>
-                        <div class="bg-slate-900/80 p-4 rounded-xl border border-slate-800/80 space-y-1">
-                            <span class="text-xs font-bold text-slate-400 uppercase tracking-wider block mb-2">Postura Oficial de los Partidos:</span>
-                            ${stancesHtml}
-                        </div>
-                        <p class="text-xs text-slate-500 italic">Fuente: ${q.source}</p>
-                    </div>
-                `;
-            });
-        }
+                const btnPrev = document.getElementById('btn-quiz-prev');
+                btnPrev.disabled = (this.currentIndex === 0);
+            }
 
-        let partiesVisible = false;
-        function toggleParties() {
-            partiesVisible = !partiesVisible;
-            const partyLayer = document.getElementById('party-layer');
-            const btn = document.getElementById('party-toggle-btn');
-            if (partiesVisible) {
-                partyLayer.classList.remove('opacity-0', 'pointer-events-none');
-                partyLayer.classList.add('opacity-100');
-                btn.textContent = "Ocultar Partidos Políticos";
-                btn.classList.remove('bg-indigo-600', 'hover:bg-indigo-500');
-                btn.classList.add('bg-slate-700', 'hover:bg-slate-600');
-            } else {
-                partyLayer.classList.remove('opacity-100');
-                partyLayer.classList.add('opacity-0', 'pointer-events-none');
-                btn.textContent = "Mostrar Partidos Políticos";
-                btn.classList.remove('bg-slate-700', 'hover:bg-slate-600');
-                btn.classList.add('bg-indigo-600', 'hover:bg-indigo-500');
+            selectAnswer(value) {
+                this.userAnswers[this.currentIndex] = value;
+
+                if (this.currentIndex < AppData.questions.length - 1) {
+                    this.currentIndex++;
+                    this.renderQuizStep();
+                } else {
+                    this.calculateResults();
+                }
+            }
+
+            prevQuestion() {
+                if (this.currentIndex > 0) {
+                    this.currentIndex--;
+                    this.renderQuizStep();
+                }
+            }
+
+            calculateResults() {
+                let econSum = 0;
+                let econCount = 0;
+                let socialSum = 0;
+                let socialCount = 0;
+
+                this.userAnswers.forEach((ansVal, idx) => {
+                    const value = (ansVal !== null) ? ansVal : 50;
+                    const q = AppData.questions[idx];
+                    const effectiveVal = q.inverted ? (100 - value) : value;
+
+                    if (q.axis === 'econ') {
+                        econSum += effectiveVal;
+                        econCount++;
+                    } else {
+                        socialSum += effectiveVal;
+                        socialCount++;
+                    }
+                });
+
+                const finalX = Math.round(econSum / (econCount || 1));
+                const finalY = Math.round(socialSum / (socialCount || 1));
+
+                this.userScore = { x: finalX, y: finalY };
+                this.renderResultsScreen();
+            }
+
+            renderResultsScreen() {
+                document.getElementById('encuesta-section').classList.add('hidden');
+                document.getElementById('results-section').classList.remove('hidden');
+
+                document.getElementById('res-x-val').textContent = this.userScore.x;
+                document.getElementById('res-y-val').textContent = this.userScore.y;
+
+                const ideology = this.getIdeologyLabel(this.userScore.x, this.userScore.y);
+                document.getElementById('res-ideology-title').textContent = ideology;
+
+                document.getElementById('res-econ-text').textContent = `${this.userScore.x}% Mercado Libre`;
+                document.getElementById('bar-econ-left').style.width = `${100 - this.userScore.x}%`;
+                document.getElementById('bar-econ-right').style.width = `${this.userScore.x}%`;
+
+                document.getElementById('res-social-text').textContent = `${this.userScore.y}% Libertad Personal`;
+                document.getElementById('bar-social-auth').style.width = `${100 - this.userScore.y}%`;
+                document.getElementById('bar-social-lib').style.width = `${this.userScore.y}%`;
+
+                const maxDist = Math.sqrt(100*100 + 100*100);
+                const matches = AppData.parties.map(p => {
+                    const dx = this.userScore.x - p.x;
+                    const dy = this.userScore.y - p.y;
+                    const dist = Math.sqrt(dx * dx + dy * dy);
+                    const matchPercent = Math.max(0, Math.min(100, 100 - (dist / maxDist) * 100));
+
+                    return {
+                        ...p,
+                        distance: dist,
+                        matchPercent: Math.round(matchPercent * 10) / 10
+                    };
+                });
+
+                matches.sort((a, b) => b.matchPercent - a.matchPercent);
+
+                const top = matches[0];
+                document.getElementById('res-top-party-name').textContent = top.name;
+                document.getElementById('res-top-party-dot').style.backgroundColor = top.color;
+                document.getElementById('res-top-party-match').textContent = `${top.matchPercent}% Afinidad`;
+
+                const affinityContainer = document.getElementById('parties-affinity-list');
+                affinityContainer.innerHTML = matches.map((item, rank) => `
+                    <div class="p-3.5 rounded-2xl bg-slate-900/90 border border-slate-800 space-y-2">
+                        <div class="flex items-center justify-between text-sm">
+                            <div class="flex items-center space-x-2.5">
+                                <span class="font-extrabold text-xs text-slate-500 w-4">#${rank + 1}</span>
+                                <span class="w-3.5 h-3.5 rounded-full" style="background-color: ${item.color}"></span>
+                                <span class="font-bold text-white">${item.name}</span>
+                            </div>
+                            <span class="font-extrabold text-sm" style="color: ${item.color}">${item.matchPercent}%</span>
+                        </div>
+                        <div class="w-full bg-slate-950 h-2 rounded-full overflow-hidden">
+                            <div class="h-full rounded-full transition-all duration-700" style="width: ${item.matchPercent}%; background-color: ${item.color}"></div>
+                        </div>
+                    </div>
+                `).join('');
+
+                this.renderNolanSVG(matches);
+                this.renderTransparentAnswersReview();
+
+                document.getElementById('results-section').scrollIntoView({ behavior: 'smooth' });
+            }
+
+            togglePartiesOnChart() {
+                this.showPartiesChart = !this.showPartiesChart;
+                const layer = document.getElementById('svg-parties-layer');
+                const btnText = document.getElementById('toggle-parties-text');
+
+                if (this.showPartiesChart) {
+                    layer.classList.remove('hidden');
+                    btnText.textContent = 'Ocultar Partidos';
+                } else {
+                    layer.classList.add('hidden');
+                    btnText.textContent = 'Mostrar Partidos';
+                }
+            }
+
+            getIdeologyLabel(x, y) {
+                if (x >= 35 && x <= 65 && y >= 35 && y <= 65) return 'Centrista';
+                if (x < 50 && y >= 50) return x < 25 ? 'Izquierda Progresista' : 'Centro-Izquierda Progresista';
+                if (x >= 50 && y >= 50) return x > 75 ? 'Liberal Económico' : 'Centro-Derecha Liberal';
+                if (x < 50 && y < 50) return x < 25 ? 'Estatista' : 'Izquierda Tradicional';
+                if (x >= 50 && y < 50) return x > 75 ? 'Conservador' : 'Centro-Derecha Conservador';
+                return 'Transversal';
+            }
+
+            nolanToSVG(x, y) {
+                const nx = x / 100;
+                const ny = y / 100;
+                const svgX = 250 + (nx - 0.5) * 225;
+                const svgY = 250 + (0.5 - ny) * 225;
+                return { svgX, svgY };
+            }
+
+            renderNolanSVG(matches) {
+                const partyLayer = document.getElementById('svg-parties-layer');
+                partyLayer.innerHTML = matches.map(p => {
+                    const coords = this.nolanToSVG(p.x, p.y);
+                    return `
+                        <g class="party-node cursor-pointer">
+                            <circle cx="${coords.svgX}" cy="${coords.svgY}" r="7" fill="${p.color}" stroke="#ffffff" stroke-width="1.5"/>
+                            <text x="${coords.svgX}" y="${coords.svgY + 17}" text-anchor="middle" fill="#e2e8f0" font-size="10" font-weight="bold">
+                                ${p.name}
+                            </text>
+                        </g>
+                    `;
+                }).join('');
+
+                const userCoords = this.nolanToSVG(this.userScore.x, this.userScore.y);
+                document.getElementById('user-dot').setAttribute('cx', userCoords.svgX);
+                document.getElementById('user-dot').setAttribute('cy', userCoords.svgY);
+                document.getElementById('user-dot-ping').setAttribute('cx', userCoords.svgX);
+                document.getElementById('user-dot-ping').setAttribute('cy', userCoords.svgY);
+                document.getElementById('user-dot-label').setAttribute('x', userCoords.svgX);
+                document.getElementById('user-dot-label').setAttribute('y', userCoords.svgY - 14);
+            }
+
+            renderTransparentAnswersReview() {
+                const container = document.getElementById('answers-review-list');
+                container.innerHTML = AppData.questions.map((q, idx) => {
+                    const ansVal = this.userAnswers[idx];
+                    let textAns = "Neutral / Omitido";
+                    let badgeClass = "bg-slate-800 text-slate-300 border-slate-700";
+
+                    if (ansVal === 0) { textAns = "1. Totalmente en desacuerdo"; badgeClass = "bg-rose-950/60 text-rose-300 border-rose-500/30"; }
+                    else if (ansVal === 25) { textAns = "2. En desacuerdo"; badgeClass = "bg-amber-950/60 text-amber-300 border-amber-500/30"; }
+                    else if (ansVal === 50) { textAns = "3. Neutral"; badgeClass = "bg-slate-800 text-slate-300 border-slate-700"; }
+                    else if (ansVal === 75) { textAns = "4. De acuerdo"; badgeClass = "bg-emerald-950/60 text-emerald-300 border-emerald-500/30"; }
+                    else if (ansVal === 100) { textAns = "5. Totalmente de acuerdo"; badgeClass = "bg-indigo-950/60 text-indigo-300 border-indigo-500/30"; }
+
+                    return `
+                        <div class="p-4 rounded-2xl bg-slate-900/80 border border-slate-800 space-y-3">
+                            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-slate-800 pb-3">
+                                <div>
+                                    <span class="text-[10px] font-bold uppercase tracking-wider text-indigo-400">${q.category} • ${q.pillar}</span>
+                                    <h4 class="font-bold text-sm text-white">${idx + 1}. ${q.text}</h4>
+                                </div>
+                                <span class="px-3 py-1 rounded-lg border text-xs font-semibold whitespace-nowrap self-start sm:self-center ${badgeClass}">
+                                    ${textAns}
+                                </span>
+                            </div>
+
+                            <div class="grid grid-cols-1 md:grid-cols-5 gap-2 pt-1 text-[11px]">
+                                <div class="p-2 rounded-xl bg-purple-950/30 border border-purple-500/20">
+                                    <span class="font-bold text-purple-300 block mb-0.5">Podemos:</span>
+                                    <p class="text-slate-300 leading-tight">${q.citations.podemos}</p>
+                                </div>
+                                <div class="p-2 rounded-xl bg-pink-950/30 border border-pink-500/20">
+                                    <span class="font-bold text-pink-300 block mb-0.5">Sumar:</span>
+                                    <p class="text-slate-300 leading-tight">${q.citations.sumar}</p>
+                                </div>
+                                <div class="p-2 rounded-xl bg-red-950/30 border border-red-500/20">
+                                    <span class="font-bold text-red-300 block mb-0.5">PSOE:</span>
+                                    <p class="text-slate-300 leading-tight">${q.citations.psoe}</p>
+                                </div>
+                                <div class="p-2 rounded-xl bg-blue-950/30 border border-blue-500/20">
+                                    <span class="font-bold text-blue-300 block mb-0.5">PP:</span>
+                                    <p class="text-slate-300 leading-tight">${q.citations.pp}</p>
+                                </div>
+                                <div class="p-2 rounded-xl bg-emerald-950/30 border border-emerald-500/20">
+                                    <span class="font-bold text-emerald-300 block mb-0.5">Vox:</span>
+                                    <p class="text-slate-300 leading-tight">${q.citations.vox}</p>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                }).join('');
+            }
+
+            toggleAnswersReview() {
+                const list = document.getElementById('answers-review-list');
+                const icon = document.getElementById('toggle-review-icon');
+                if (list.classList.contains('hidden')) {
+                    list.classList.remove('hidden');
+                    icon.className = "fa-solid fa-chevron-up mr-2 text-indigo-400";
+                } else {
+                    list.classList.add('hidden');
+                    icon.className = "fa-solid fa-chevron-down mr-2 text-indigo-400";
+                }
+            }
+
+            toggleFaq(id) {
+                const ans = document.getElementById(`faq-ans-${id}`);
+                const icon = document.getElementById(`faq-icon-${id}`);
+                if (ans.classList.contains('hidden')) {
+                    ans.classList.remove('hidden');
+                    icon.className = "fa-solid fa-chevron-up text-indigo-400";
+                } else {
+                    ans.classList.add('hidden');
+                    icon.className = "fa-solid fa-chevron-down text-indigo-400";
+                }
+            }
+
+            resetApp() {
+                this.currentIndex = 0;
+                this.userAnswers = new Array(AppData.questions.length).fill(null);
+                this.showPartiesChart = false;
+                document.getElementById('svg-parties-layer').classList.add('hidden');
+                document.getElementById('toggle-parties-text').textContent = 'Mostrar Partidos';
+                document.getElementById('results-section').classList.add('hidden');
+                document.getElementById('encuesta-section').classList.remove('hidden');
+                this.renderQuizStep();
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }
+
+            shareResults(platform) {
+                const text = `Mi resultado en la Brújula Política Española (Nolan Chart) es: Libertad Económica X:${this.userScore.x}%, Libertad Social Y:${this.userScore.y}%. ¡Haz la prueba!`;
+                const url = window.location.href;
+
+                if (platform === 'whatsapp') {
+                    window.open(`https://api.whatsapp.com/send?text=${encodeURIComponent(text + ' ' + url)}`, '_blank');
+                } else if (platform === 'twitter') {
+                    window.open(`https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}&url=${encodeURIComponent(url)}`, '_blank');
+                }
+            }
+
+            copyShareLink() {
+                const el = document.createElement('textarea');
+                el.value = window.location.href;
+                document.body.appendChild(el);
+                el.select();
+                document.execCommand('copy');
+                document.body.removeChild(el);
+                alert('¡Enlace copiado al portapapeles!');
             }
         }
 
-        function resetTest() {
-            viewResults.classList.add('hidden');
-            viewIntro.classList.remove('hidden');
-            window.scrollTo({ top: 0, behavior: 'smooth' });
+        let app;
+        window.addEventListener('DOMContentLoaded', () => {
+            app = new Application();
+            app.init();
+        });
+    </script>
+</body>
+</html>
+    <!-- JAVASCRIPT LOGIC ENGINE WITH UPDATED PARTIES (SUMAR / FRENTE AMPLIO) AND POST-2021 CITATIONS -->
+    <script>
+        // Security Helper: Sanitizes user inputs / HTML strings against XSS attacks
+        function escapeHTML(str) {
+            if (typeof str !== 'string') return str;
+            return str.replace(/[&<>'"]/g, 
+                tag => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&quot;' }[tag] || tag)
+            );
         }
+
+        const AppData = {
+            parties: [
+                { id: 'podemos', name: 'Podemos', color: '#8b5cf6', x: 10, y: 75, citation: 'Programa Electoral 23J & Ley de Vivienda (BOE 2023)' },
+                { id: 'frenteamplio', name: 'Sumar / Frente Amplio', color: '#ec4899', x: 18, y: 80, citation: 'Programa Electoral 23J & Elecciones Europeas 2024' },
+                { id: 'psoe', name: 'PSOE', color: '#ef4444', x: 40, y: 70, citation: 'Programa Electoral 23J & Acuerdos de Gobierno 2023-2024' },
+                { id: 'pp', name: 'Partido Popular', color: '#3b82f6', x: 78, y: 42, citation: 'Programa Electoral PP 23J & Enmiendas Leyes 2023-2024' },
+                { id: 'vox', name: 'Vox', color: '#10b981', x: 85, y: 18, citation: 'Programa 23J & Votaciones en Congreso (2021-2024)' }
+            ],
+
+            // 24 EXPANDED, SIMPLIFIED QUESTIONS (UPDATED CITATIONS TO POST-2021)
+            questions: [
+                // BLOQUE 1: ECONOMÍA Y FISCALIDAD (0-5)
+                {
+                    id: 1, blockIndex: 0, category: 'Bloque 1: Economía y Fiscalidad', pillar: 'Impuestos a Grandes Fortunas',
+                    text: '¿Se deberían subir los impuestos a las personas muy ricas y grandes empresas para financiar mejores servicios públicos?',
+                    axis: 'econ', inverted: true,
+                    citations: { podemos: 'Impuesto permanente a grandes fortunas.', frenteamplio: 'Impuesto progresivo a fortunas y banca.', psoe: 'Manutención de tributos a banca y energéticas.', pp: 'Bajar tipos de IRPF y desgravaciones.', vox: 'Rebaja drástica e impuesto único bajo.' }
+                },
+                {
+                    id: 2, blockIndex: 0, category: 'Bloque 1: Economía y Fiscalidad', pillar: 'Precios del Alquiler',
+                    text: '¿Debería el Gobierno poner un tope máximo al precio del alquiler en las zonas donde las viviendas son muy caras?',
+                    axis: 'econ', inverted: true,
+                    citations: { podemos: 'Topes obligatorios al 100% de alquileres.', frenteamplio: 'Límite de precios por índice de referencia.', psoe: 'Topes zonales según Ley de Vivienda 2023.', pp: 'Derogar Ley de Vivienda e incentivar oferta.', vox: 'Liberación total del suelo y sin topes.' }
+                },
+                {
+                    id: 3, blockIndex: 0, category: 'Bloque 1: Economía y Fiscalidad', pillar: 'Jornada Laboral',
+                    text: '¿Se debería reducir la jornada laboral por ley (por ejemplo a 37,5 o 35 horas semanales) manteniendo el mismo sueldo?',
+                    axis: 'econ', inverted: true,
+                    citations: { podemos: 'Reducción por ley a 35 horas semanales.', frenteamplio: 'Reducción legal inmediata a 37,5h en 2024.', psoe: 'Acuerdo social de reducción a 37,5h.', pp: 'Pactar voluntariamente entre partes.', vox: 'No intervenir por decreto en las horas.' }
+                },
+                {
+                    id: 4, blockIndex: 0, category: 'Bloque 1: Economía y Fiscalidad', pillar: 'Despido y Trabajo',
+                    text: '¿Debería ser más barato y sencillo para las empresas despedir o contratar trabajadores según sus necesidades?',
+                    axis: 'econ', inverted: false,
+                    citations: { podemos: 'Encarecer y tipificar el despido procedente.', frenteamplio: 'Despido restaurativo según circunstancias.', psoe: 'Consolidación de Reforma Laboral 2022.', pp: 'Mayor flexibilidad laboral y costes adaptados.', vox: 'Flexibilidad de contratación sin penalizaciones.' }
+                },
+                {
+                    id: 5, blockIndex: 0, category: 'Bloque 1: Economía y Fiscalidad', pillar: 'Impuesto de Sucesiones',
+                    text: '¿Se debería eliminar el impuesto que se paga al heredar viviendas o dinero de los padres?',
+                    axis: 'econ', inverted: false,
+                    citations: { podemos: 'Mantenerlo para proteger el interés público.', frenteamplio: 'Gravar grandes masas patrimoniales.', psoe: 'Armonizar para evitar dumping autonómico.', pp: 'Bonificación del 99% en Comunidades.', vox: 'Eliminación total en todo el territorio.' }
+                },
+                {
+                    id: 6, blockIndex: 0, category: 'Bloque 1: Economía y Fiscalidad', pillar: 'Salario Mínimo',
+                    text: '¿El Gobierno debe seguir subiendo el Salario Mínimo obligatorio todos los años por decreto?',
+                    axis: 'econ', inverted: true,
+                    citations: { podemos: 'Subidas continuas por encima de la inflación.', frenteamplio: 'Alcanzar el 60% del salario medio real.', psoe: 'Revisión anual respetando directiva europea.', pp: 'Vincular subidas a la productividad.', vox: 'Reducir cargas empresariales antes que subir SMI.' }
+                },
+
+                // BLOQUE 2: SERVICIOS PÚBLICOS Y ESTADO DEL BIENESTAR (6-11)
+                {
+                    id: 7, blockIndex: 1, category: 'Bloque 2: Servicios Públicos', pillar: 'Educación Concertada y Privada',
+                    text: '¿El Estado debería financiar con dinero público los colegios concertados o dar cheques a las familias para ir a colegios privados?',
+                    axis: 'econ', inverted: false,
+                    citations: { podemos: 'Prioridad 100% al sistema público.', frenteamplio: 'Blindaje presupuestario de la escuela pública.', psoe: 'Respetar modelo de conciertos existente.', pp: 'Defensa de la libertad de elección y concertada.', vox: 'Cheque escolar universal para cualquier centro.' }
+                },
+                {
+                    id: 8, blockIndex: 1, category: 'Bloque 2: Servicios Públicos', pillar: 'Sanidad Privada y Copago',
+                    text: '¿Se debería permitir que empresas privadas gestionen hospitales públicos si aseguran hacerlo de forma eficiente?',
+                    axis: 'econ', inverted: false,
+                    citations: { podemos: 'Prohibición explícita de gestión privada.', frenteamplio: 'Ley de equidad y eliminación de privatizaciones.', psoe: 'Sanidad pública con gestión compartida regulada.', pp: 'Colaboración público-privada sanitaria.', vox: 'Deducciones fiscales por contratar seguros privados.' }
+                },
+                {
+                    id: 9, blockIndex: 1, category: 'Bloque 2: Servicios Públicos', pillar: 'Empresas Públicas de Energía',
+                    text: '¿El Estado debería crear una empresa pública de electricidad para competir con las eléctricas privadas?',
+                    axis: 'econ', inverted: true,
+                    citations: { podemos: 'Creación inmediata de una energética estatal.', frenteamplio: 'Participación pública directa en renovables.', psoe: 'Impulso público de energías limpias.', pp: 'Libre competencia en sector energético.', vox: 'Reducción de impuestos y libertad de mercado.' }
+                },
+                {
+                    id: 10, blockIndex: 1, category: 'Bloque 2: Servicios Públicos', pillar: 'Pensiones Privadas',
+                    text: '¿Debería fomentarse que la gente contrate planes de pensiones privados para el futuro en lugar de depender solo del Estado?',
+                    axis: 'econ', inverted: false,
+                    citations: { podemos: 'Garantía del sistema público de pensiones.', frenteamplio: 'Revalorización pública mediante IPC.', psoe: 'Sostenibilidad mediante reforma de pensiones.', pp: 'Incentivar planes de ahorro complementarios.', vox: 'Favorecer fiscalmente los fondos privados.' }
+                },
+                {
+                    id: 11, blockIndex: 1, category: 'Bloque 2: Servicios Públicos', pillar: 'Subvenciones a Sindicatos y Patronal',
+                    text: '¿Se deberían quitar completamente las subvenciones públicas a sindicatos, partidos políticos y patronales empresariales?',
+                    axis: 'econ', inverted: false,
+                    citations: { podemos: 'Reconocer valor del agentes sociales.', frenteamplio: 'Apoyo institucional al diálogo social.', psoe: 'Financiación pública regulada.', pp: 'Auditoría y control estricto de fondos.', vox: 'Eliminación completa de subvenciones.' }
+                },
+                {
+                    id: 12, blockIndex: 1, category: 'Bloque 2: Servicios Públicos', pillar: 'Ayuda Básica Incondicional',
+                    text: '¿El Estado debería garantizar un subsidio o ingreso mínimo a cualquier persona en situación de vulnerabilidad?',
+                    axis: 'econ', inverted: true,
+                    citations: { podemos: 'Renta garantizada incondicional.', frenteamplio: 'Prestación universal por crianza y vulnerabilidad.', psoe: 'Refuerzo de la gestión del Ingreso Mínimo Vital.', pp: 'Subsidios condicionados a búsqueda de empleo.', vox: 'Fiscalización estricta de ayudas para evitar abusos.' }
+                },
+
+                // BLOQUE 3: DERECHOS SOCIALES Y LIBERTADES PERSONALES (12-17)
+                {
+                    id: 13, blockIndex: 2, category: 'Bloque 3: Derechos y Libertades', pillar: 'Derechos Trans y Autodeterminación',
+                    text: '¿Cualquier persona debería poder cambiar legalmente su nombre y sexo en el DNI sin necesidad de informes médicos?',
+                    axis: 'social', inverted: false,
+                    citations: { podemos: 'Defensa íntegra de la Ley Trans 2023.', frenteamplio: 'Consolidación de derechos LGTBIQ+.', psoe: 'Mantenimiento del marco legislativo vigente.', pp: 'Modificar artículos de la autodeterminación.', vox: 'Derogación inmediata de la Ley Trans.' }
+                },
+                {
+                    id: 14, blockIndex: 2, category: 'Bloque 3: Derechos y Libertades', pillar: 'Eutanasia',
+                    text: '¿Una persona con una enfermedad incurable o dolor insoportable debería tener derecho a solicitar la eutanasia médica?',
+                    axis: 'social', inverted: false,
+                    citations: { podemos: 'Derecho a la muerte digna garantizado.', frenteamplio: 'Garantía del derecho a la eutanasia.', psoe: 'Defensa de la Ley Orgánica de Eutanasia 2021.', pp: 'Potenciar la Ley de Cuidados Paliativos.', vox: 'Derogación de la Ley de Eutanasia.' }
+                },
+                {
+                    id: 15, blockIndex: 2, category: 'Bloque 3: Derechos y Libertades', pillar: 'Aborto en Sanidad Pública',
+                    text: '¿El aborto libre en las primeras semanas de embarazo debe estar totalmente garantizado en la sanidad pública?',
+                    axis: 'social', inverted: false,
+                    citations: { podemos: 'Garantía 100% pública sin objetores.', frenteamplio: 'Registro de objetores para asegurar servicio.', psoe: 'Reforma del aborto 2023 con centros públicos.', pp: 'Respetar doctrina Constitucional 2023.', vox: 'Defensa de la vida desde la concepción.' }
+                },
+                {
+                    id: 16, blockIndex: 2, category: 'Bloque 3: Derechos y Libertades', pillar: 'Laicidad del Estado',
+                    text: '¿Se debería quitar la casilla de la Iglesia en la declaración de la renta y eliminar la religión en escuelas públicas?',
+                    axis: 'social', inverted: false,
+                    citations: { podemos: 'Estado 100% laico sin asignación tributaria.', frenteamplio: 'Avanzar hacia la laicidad institucional.', psoe: 'Mantenimiento del marco constitucional aconfesional.', pp: 'Respeto a los Acuerdos Iglesia-Estado.', vox: 'Protección de la tradición cristiana de España.' }
+                },
+                {
+                    id: 17, blockIndex: 2, category: 'Bloque 3: Derechos y Libertades', pillar: 'Regularización de Migrantes',
+                    text: '¿Se debe dar papeles y regularizar la situación de los migrantes sin papeles que ya viven y trabajan en España?',
+                    axis: 'social', inverted: false,
+                    citations: { podemos: 'Apoyo a ILP para regularización masiva 2024.', frenteamplio: 'Vías legales y regularización de trabajadores.', psoe: 'Reforma del Reglamento de Extranjería 2024.', pp: 'Inmigración vinculada a contrato en origen.', vox: 'Expulsión e incompetencia de regularizaciones.' }
+                },
+                {
+                    id: 18, blockIndex: 2, category: 'Bloque 3: Derechos y Libertades', pillar: 'Memoria Histórica',
+                    text: '¿El Estado debe invertir dinero público en buscar y retirar símbolos o fosas del franquismo?',
+                    axis: 'social', inverted: false,
+                    citations: { podemos: 'Cumplimiento exhaustivo de memoria democrática.', frenteamplio: 'Justicia, reparación y localización de fosas.', psoe: 'Aplicación de Ley de Memoria Democrática 2022.', pp: 'Leyes de concordia a nivel autonómico.', vox: 'Derogación total de las leyes de memoria.' }
+                },
+
+                // BLOQUE 4: MODELO DE ESTADO Y COHESIÓN TERRITORIAL (18-23)
+                {
+                    id: 19, blockIndex: 3, category: 'Bloque 4: Modelo de Estado', pillar: 'Centralización de Competencias',
+                    text: '¿El Gobierno central debería recuperar competencias como Sanidad o Educación que ahora tienen las Comunidades Autónomas?',
+                    axis: 'social', inverted: true,
+                    citations: { podemos: 'Reconocimiento plurinacional.', frenteamplio: 'Federalismo y profundización autonómica.', psoe: 'Defensa del Estado de las Autonomías.', pp: 'Modelo autonómico dentro de la Constitución.', vox: 'Estado unitario sin autonomías.' }
+                },
+                {
+                    id: 20, blockIndex: 3, category: 'Bloque 4: Modelo de Estado', pillar: 'Lenguas Cooficiales',
+                    text: '¿Se debería poder usar el catalán, euskera y gallego con total normalidad en el Congreso y trámites del Estado?',
+                    axis: 'social', inverted: false,
+                    citations: { podemos: 'Normalización total de lenguas cooficiales.', frenteamplio: 'Uso en Congreso y Europa desde 2023.', psoe: 'Aprobación del uso de lenguas en el Congreso.', pp: 'Castellano como lengua común preferente.', vox: 'Exclusividad del español en instituciones.' }
+                },
+                {
+                    id: 21, blockIndex: 3, category: 'Bloque 4: Modelo de Estado', pillar: 'Monarquía o República',
+                    text: '¿Se debería celebrar un referéndum para que los ciudadanos decidan entre Monarquía o República?',
+                    axis: 'social', inverted: false,
+                    citations: { podemos: 'Horizonte republicano y consulta.', frenteamplio: 'Democratización de la Jefatura de Estado.', psoe: 'Lealtad al modelo constitucional de Monarquía.', pp: 'Defensa de la Corona como símbolo de unidad.', vox: 'Defensa incuestionable del Rey.' }
+                },
+                {
+                    id: 22, blockIndex: 3, category: 'Bloque 4: Modelo de Estado', pillar: 'Elección de Jueces (CGPJ)',
+                    text: '¿Los propios jueces deberían elegir directamente a los vocales del Poder Judicial sin que intervengan los partidos del Congreso?',
+                    axis: 'econ', inverted: false,
+                    citations: { podemos: 'Reforma de mayorías en Congreso sin bloqueos.', frenteamplio: 'Evitar secuestro institucional judicial.', psoe: 'Renovación pactada del CGPJ (Acuerdo 2024).', pp: 'Elección por los jueces del turno judicial.', vox: 'Elección exclusiva por magistrados.' }
+                },
+                {
+                    id: 23, blockIndex: 3, category: 'Bloque 4: Modelo de Estado', pillar: 'Manifestaciones y Seguridad',
+                    text: '¿Se debería reformar la Ley de Seguridad Ciudadana (Ley Mordaza) para reducir las multas policiales en protestas?',
+                    axis: 'social', inverted: false,
+                    citations: { podemos: 'Derogación integra del régimen sancionador.', frenteamplio: 'Sustitución por ley garantista de libertades.', psoe: 'Reformar aspectos desproporcionados.', pp: 'Protección integral de la autoridad policial.', vox: 'Endurecimiento de penas por desórdenes.' }
+                },
+                {
+                    id: 24, blockIndex: 3, category: 'Bloque 4: Modelo de Estado', pillar: 'Control de Fronteras',
+                    text: '¿Deberían reforzarse las vallas y controles fronterizos para impedir la entrada ilegal de personas?',
+                    axis: 'social', inverted: true,
+                    citations: { podemos: 'Revisión del modelo de fronteras y CIEs.', frenteamplio: 'Respeto a derechos humanos en vallados.', psoe: 'Gestión conjunta europea y control de fronteras.', pp: 'Refuerzo de vallas y colaboración internacional.', vox: 'Despliegue militar y máxima severidad.' }
+                }
+            ]
+        };
+
+        class Application {
+            constructor() {
+                this.currentIndex = 0;
+                this.userAnswers = new Array(AppData.questions.length).fill(null);
+                this.userScore = { x: 50, y: 50 };
+                this.showPartiesChart = false;
+            }
+
+            init() {
+                this.renderQuizStep();
+            }
+
+            scrollToSurvey() {
+                document.getElementById('encuesta-section').scrollIntoView({ behavior: 'smooth' });
+            }
+
+            renderQuizStep() {
+                const q = AppData.questions[this.currentIndex];
+                const total = AppData.questions.length;
+
+                document.getElementById('category-badge').textContent = escapeHTML(q.category);
+                document.getElementById('quiz-step-indicator').textContent = `Pregunta ${this.currentIndex + 1} de ${total}`;
+                document.getElementById('question-pillar').textContent = `Tema: ${escapeHTML(q.pillar)}`;
+                document.getElementById('question-text').textContent = escapeHTML(q.text);
+
+                const currentBlock = q.blockIndex;
+                for (let i = 0; i < 4; i++) {
+                    const tabElem = document.getElementById(`tab-block-${i}`);
+                    if (i < currentBlock) {
+                        tabElem.className = 'h-1.5 rounded-full bg-indigo-500 transition-all';
+                    } else if (i === currentBlock) {
+                        tabElem.className = 'h-1.5 rounded-full bg-gradient-to-r from-indigo-500 to-purple-500 transition-all';
+                    } else {
+                        tabElem.className = 'h-1.5 rounded-full bg-slate-800 transition-all';
+                    }
+                }
+
+                const btnPrev = document.getElementById('btn-quiz-prev');
+                btnPrev.disabled = (this.currentIndex === 0);
+            }
+
+            selectAnswer(value) {
+                this.userAnswers[this.currentIndex] = value;
+
+                if (this.currentIndex < AppData.questions.length - 1) {
+                    this.currentIndex++;
+                    this.renderQuizStep();
+                } else {
+                    this.calculateResults();
+                }
+            }
+
+            prevQuestion() {
+                if (this.currentIndex > 0) {
+                    this.currentIndex--;
+                    this.renderQuizStep();
+                }
+            }
+
+            calculateResults() {
+                let econSum = 0;
+                let econCount = 0;
+                let socialSum = 0;
+                let socialCount = 0;
+
+                this.userAnswers.forEach((ansVal, idx) => {
+                    const value = (ansVal !== null) ? ansVal : 50;
+                    const q = AppData.questions[idx];
+                    const effectiveVal = q.inverted ? (100 - value) : value;
+
+                    if (q.axis === 'econ') {
+                        econSum += effectiveVal;
+                        econCount++;
+                    } else {
+                        socialSum += effectiveVal;
+                        socialCount++;
+                    }
+                });
+
+                const finalX = Math.round(econSum / (econCount || 1));
+                const finalY = Math.round(socialSum / (socialCount || 1));
+
+                this.userScore = { x: finalX, y: finalY };
+                this.renderResultsScreen();
+            }
+
+            renderResultsScreen() {
+                document.getElementById('encuesta-section').classList.add('hidden');
+                document.getElementById('results-section').classList.remove('hidden');
+
+                document.getElementById('res-x-val').textContent = this.userScore.x;
+                document.getElementById('res-y-val').textContent = this.userScore.y;
+
+                const ideology = this.getIdeologyLabel(this.userScore.x, this.userScore.y);
+                document.getElementById('res-ideology-title').textContent = escapeHTML(ideology);
+
+                document.getElementById('res-econ-text').textContent = `${this.userScore.x}% Mercado Libre`;
+                document.getElementById('bar-econ-left').style.width = `${100 - this.userScore.x}%`;
+                document.getElementById('bar-econ-right').style.width = `${this.userScore.x}%`;
+
+                document.getElementById('res-social-text').textContent = `${this.userScore.y}% Libertad Personal`;
+                document.getElementById('bar-social-auth').style.width = `${100 - this.userScore.y}%`;
+                document.getElementById('bar-social-lib').style.width = `${this.userScore.y}%`;
+
+                const maxDist = Math.sqrt(100*100 + 100*100);
+                const matches = AppData.parties.map(p => {
+                    const dx = this.userScore.x - p.x;
+                    const dy = this.userScore.y - p.y;
+                    const dist = Math.sqrt(dx * dx + dy * dy);
+                    const matchPercent = Math.max(0, Math.min(100, 100 - (dist / maxDist) * 100));
+
+                    return {
+                        ...p,
+                        distance: dist,
+                        matchPercent: Math.round(matchPercent * 10) / 10
+                    };
+                });
+
+                matches.sort((a, b) => b.matchPercent - a.matchPercent);
+
+                const top = matches[0];
+                document.getElementById('res-top-party-name').textContent = escapeHTML(top.name);
+                document.getElementById('res-top-party-dot').style.backgroundColor = top.color;
+                document.getElementById('res-top-party-match').textContent = `${top.matchPercent}% Afinidad`;
+
+                const affinityContainer = document.getElementById('parties-affinity-list');
+                affinityContainer.innerHTML = matches.map((item, rank) => `
+                    <div class="p-3.5 rounded-2xl bg-slate-900/90 border border-slate-800 space-y-2">
+                        <div class="flex items-center justify-between text-sm">
+                            <div class="flex items-center space-x-2.5">
+                                <span class="font-extrabold text-xs text-slate-500 w-4">#${rank + 1}</span>
+                                <span class="w-3.5 h-3.5 rounded-full" style="background-color: ${item.color}"></span>
+                                <span class="font-bold text-white">${escapeHTML(item.name)}</span>
+                            </div>
+                            <span class="font-extrabold text-sm" style="color: ${item.color}">${item.matchPercent}%</span>
+                        </div>
+                        <div class="w-full bg-slate-950 h-2 rounded-full overflow-hidden">
+                            <div class="h-full rounded-full transition-all duration-700" style="width: ${item.matchPercent}%; background-color: ${item.color}"></div>
+                        </div>
+                    </div>
+                `).join('');
+
+                this.renderNolanSVG(matches);
+                this.renderTransparentAnswersReview();
+
+                document.getElementById('results-section').scrollIntoView({ behavior: 'smooth' });
+            }
+
+            togglePartiesOnChart() {
+                this.showPartiesChart = !this.showPartiesChart;
+                const layer = document.getElementById('svg-parties-layer');
+                const btnText = document.getElementById('toggle-parties-text');
+
+                if (this.showPartiesChart) {
+                    layer.classList.remove('hidden');
+                    btnText.textContent = 'Ocultar Partidos';
+                } else {
+                    layer.classList.add('hidden');
+                    btnText.textContent = 'Mostrar Partidos';
+                }
+            }
+
+            getIdeologyLabel(x, y) {
+                if (x >= 35 && x <= 65 && y >= 35 && y <= 65) return 'Centrista';
+                if (x < 50 && y >= 50) return x < 25 ? 'Izquierda Progresista' : 'Centro-Izquierda Progresista';
+                if (x >= 50 && y >= 50) return x > 75 ? 'Liberal Económico' : 'Centro-Derecha Liberal';
+                if (x < 50 && y < 50) return x < 25 ? 'Estatista' : 'Izquierda Tradicional';
+                if (x >= 50 && y < 50) return x > 75 ? 'Conservador' : 'Centro-Derecha Conservador';
+                return 'Transversal';
+            }
+
+            nolanToSVG(x, y) {
+                const nx = x / 100;
+                const ny = y / 100;
+                const svgX = 250 + (nx - 0.5) * 225;
+                const svgY = 250 + (0.5 - ny) * 225;
+                return { svgX, svgY };
+            }
+
+            renderNolanSVG(matches) {
+                const partyLayer = document.getElementById('svg-parties-layer');
+                partyLayer.innerHTML = matches.map(p => {
+                    const coords = this.nolanToSVG(p.x, p.y);
+                    return `
+                        <g class="party-node cursor-pointer">
+                            <circle cx="${coords.svgX}" cy="${coords.svgY}" r="7" fill="${p.color}" stroke="#ffffff" stroke-width="1.5"/>
+                            <text x="${coords.svgX}" y="${coords.svgY + 17}" text-anchor="middle" fill="#e2e8f0" font-size="10" font-weight="bold">
+                                ${escapeHTML(p.name)}
+                            </text>
+                        </g>
+                    `;
+                }).join('');
+
+                const userCoords = this.nolanToSVG(this.userScore.x, this.userScore.y);
+                document.getElementById('user-dot').setAttribute('cx', userCoords.svgX);
+                document.getElementById('user-dot').setAttribute('cy', userCoords.svgY);
+                document.getElementById('user-dot-ping').setAttribute('cx', userCoords.svgX);
+                document.getElementById('user-dot-ping').setAttribute('cy', userCoords.svgY);
+                document.getElementById('user-dot-label').setAttribute('x', userCoords.svgX);
+                document.getElementById('user-dot-label').setAttribute('y', userCoords.svgY - 14);
+            }
+
+            renderTransparentAnswersReview() {
+                const container = document.getElementById('answers-review-list');
+                container.innerHTML = AppData.questions.map((q, idx) => {
+                    const ansVal = this.userAnswers[idx];
+                    let textAns = "Neutral / Omitido";
+                    let badgeClass = "bg-slate-800 text-slate-300 border-slate-700";
+
+                    if (ansVal === 0) { textAns = "1. Totalmente en desacuerdo"; badgeClass = "bg-rose-950/60 text-rose-300 border-rose-500/30"; }
+                    else if (ansVal === 25) { textAns = "2. En desacuerdo"; badgeClass = "bg-amber-950/60 text-amber-300 border-amber-500/30"; }
+                    else if (ansVal === 50) { textAns = "3. Neutral"; badgeClass = "bg-slate-800 text-slate-300 border-slate-700"; }
+                    else if (ansVal === 75) { textAns = "4. De acuerdo"; badgeClass = "bg-emerald-950/60 text-emerald-300 border-emerald-500/30"; }
+                    else if (ansVal === 100) { textAns = "5. Totalmente de acuerdo"; badgeClass = "bg-indigo-950/60 text-indigo-300 border-indigo-500/30"; }
+
+                    return `
+                        <div class="p-4 rounded-2xl bg-slate-900/80 border border-slate-800 space-y-3">
+                            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-slate-800 pb-3">
+                                <div>
+                                    <span class="text-[10px] font-bold uppercase tracking-wider text-indigo-400">${escapeHTML(q.category)} • ${escapeHTML(q.pillar)}</span>
+                                    <h4 class="font-bold text-sm text-white">${idx + 1}. ${escapeHTML(q.text)}</h4>
+                                </div>
+                                <span class="px-3 py-1 rounded-lg border text-xs font-semibold whitespace-nowrap self-start sm:self-center ${badgeClass}">
+                                    ${escapeHTML(textAns)}
+                                </span>
+                            </div>
+
+                            <div class="grid grid-cols-1 md:grid-cols-5 gap-2 pt-1 text-[11px]">
+                                <div class="p-2 rounded-xl bg-purple-950/30 border border-purple-500/20">
+                                    <span class="font-bold text-purple-300 block mb-0.5">Podemos:</span>
+                                    <p class="text-slate-300 leading-tight">${escapeHTML(q.citations.podemos)}</p>
+                                </div>
+                                <div class="p-2 rounded-xl bg-pink-950/30 border border-pink-500/20">
+                                    <span class="font-bold text-pink-300 block mb-0.5">Sumar / Frente Amplio:</span>
+                                    <p class="text-slate-300 leading-tight">${escapeHTML(q.citations.frenteamplio)}</p>
+                                </div>
+                                <div class="p-2 rounded-xl bg-red-950/30 border border-red-500/20">
+                                    <span class="font-bold text-red-300 block mb-0.5">PSOE:</span>
+                                    <p class="text-slate-300 leading-tight">${escapeHTML(q.citations.psoe)}</p>
+                                </div>
+                                <div class="p-2 rounded-xl bg-blue-950/30 border border-blue-500/20">
+                                    <span class="font-bold text-blue-300 block mb-0.5">PP:</span>
+                                    <p class="text-slate-300 leading-tight">${escapeHTML(q.citations.pp)}</p>
+                                </div>
+                                <div class="p-2 rounded-xl bg-emerald-950/30 border border-emerald-500/20">
+                                    <span class="font-bold text-emerald-300 block mb-0.5">Vox:</span>
+                                    <p class="text-slate-300 leading-tight">${escapeHTML(q.citations.vox)}</p>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                }).join('');
+            }
+
+            toggleAnswersReview() {
+                const list = document.getElementById('answers-review-list');
+                const icon = document.getElementById('toggle-review-icon');
+                if (list.classList.contains('hidden')) {
+                    list.classList.remove('hidden');
+                    icon.className = "fa-solid fa-chevron-up mr-2 text-indigo-400";
+                } else {
+                    list.classList.add('hidden');
+                    icon.className = "fa-solid fa-chevron-down mr-2 text-indigo-400";
+                }
+            }
+
+            toggleFaq(id) {
+                const ans = document.getElementById(`faq-ans-${id}`);
+                const icon = document.getElementById(`faq-icon-${id}`);
+                if (ans.classList.contains('hidden')) {
+                    ans.classList.remove('hidden');
+                    icon.className = "fa-solid fa-chevron-up text-indigo-400";
+                } else {
+                    ans.classList.add('hidden');
+                    icon.className = "fa-solid fa-chevron-down text-indigo-400";
+                }
+            }
+
+            resetApp() {
+                this.currentIndex = 0;
+                this.userAnswers = new Array(AppData.questions.length).fill(null);
+                this.showPartiesChart = false;
+                document.getElementById('svg-parties-layer').classList.add('hidden');
+                document.getElementById('toggle-parties-text').textContent = 'Mostrar Partidos';
+                document.getElementById('results-section').classList.add('hidden');
+                document.getElementById('encuesta-section').classList.remove('hidden');
+                this.renderQuizStep();
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }
+
+            shareResults(platform) {
+                const safeScoreX = encodeURIComponent(this.userScore.x);
+                const safeScoreY = encodeURIComponent(this.userScore.y);
+                const text = `Mi resultado en la Brújula Política Española (Nolan Chart) es: Libertad Económica X:${safeScoreX}%, Libertad Social Y:${safeScoreY}%. ¡Haz la prueba!`;
+                const url = window.location.href;
+
+                if (platform === 'whatsapp') {
+                    window.open(`https://api.whatsapp.com/send?text=${encodeURIComponent(text + ' ' + url)}`, '_blank');
+                } else if (platform === 'twitter') {
+                    window.open(`https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}&url=${encodeURIComponent(url)}`, '_blank');
+                }
+            }
+
+            copyShareLink() {
+                const el = document.createElement('textarea');
+                el.value = window.location.href;
+                document.body.appendChild(el);
+                el.select();
+                document.execCommand('copy');
+                document.body.removeChild(el);
+                alert('¡Enlace copiado al portapapeles!');
+            }
+        }
+
+        let app;
+        window.addEventListener('DOMContentLoaded', () => {
+            app = new Application();
+            app.init();
+        });
     </script>
 </body>
 </html>
